@@ -8,7 +8,9 @@
     "@material-ui/core": "4.10.0",
     "@material-ui/icons": "4.9.1",
     "classnames": "2.2.6",
+    "gapi-script": "^1.2.0",
     "history": "4.10.1",
+    "js-base64": "^3.6.0",
     "moment": "2.26.0",
     "node-sass": "4.14.1",
     "nouislider": "14.5.0",
@@ -16,10 +18,12 @@
     "react": "16.13.1",
     "react-datetime": "2.16.3",
     "react-dom": "16.13.1",
+    "react-papaparse": "^3.12.1",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "react-slick": "0.26.1",
-    "react-swipeable-views": "0.13.9"
+    "react-swipeable-views": "0.13.9",
+    "react-table": "^7.6.3"
   },
   "devDependencies": {
     "@babel/cli": "7.10.1",
