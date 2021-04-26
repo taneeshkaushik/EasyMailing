@@ -108,7 +108,8 @@ export default function SheetUpload(props) {
             setIsApiLoaded(true);
             // list files if user is authenticated
             var subject = 'Subject: '+props.subject+'\n\n';
-            props.row.map((value) => {
+            props.row.map((value,index) => {
+                console.log(index);
                 var msg = 'To: ' + '<' + value.email + '>' + '\n';
                 msg += subject + props.body + '\n' ;
                 for (var i in value) {
@@ -135,7 +136,6 @@ export default function SheetUpload(props) {
     * List files.
     */
     function sendMail(message) {
-
         gapi.client.gmail.users.messages.send({
             'userId': 'me',
             "raw": message
@@ -147,6 +147,7 @@ export default function SheetUpload(props) {
             .catch((err) => {
                 console.log(err);
             });
+        setCnt((prevProgress) => (prevProgress >= 100 ? prevProgress : prevProgress +  (100 / props.row.length) ));
     }
 
 
@@ -170,7 +171,7 @@ export default function SheetUpload(props) {
             <ListItem>
                 <ProgressBar color ='secondary' progress ={cnt} />
                 <div className='p-5'>
-                    {cnt>=100 ?<DoneAllIcon color='secondary'></DoneAllIcon>:null }
+                    {cnt>=100 ?<DoneAllIcon color='secondary'></DoneAllIcon>:null}
                 </div>
             </ListItem>
             

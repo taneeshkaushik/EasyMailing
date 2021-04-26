@@ -27,7 +27,6 @@ const App = () => {
         >
             <StylesProvider jss={jss} generateClassName={generateClassName}>
                 <Provider store={store}>
-                    <Auth>
                         <Router history={history}>
                             <FuseAuthorization>
                                 <FuseTheme>
@@ -35,7 +34,6 @@ const App = () => {
                                 </FuseTheme>
                             </FuseAuthorization>
                         </Router>
-                    </Auth>
                 </Provider>
             </StylesProvider>
         </AppContext.Provider>
