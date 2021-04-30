@@ -14,9 +14,14 @@ const routeConfigs = [
 const routes = [
     ...FuseUtils.generateRoutesFromConfigs(routeConfigs),
     {
+        path:'/test',
+        component: React.lazy(()=> import('app/main/academy/crp/tabs/newLook'))
+    },
+    {
         path     : '/',
         component: React.lazy(() => import('app/main/academy/crp/tabs/GmailService'))
-    } 
+    },
+
 ];
 
 export default routes;

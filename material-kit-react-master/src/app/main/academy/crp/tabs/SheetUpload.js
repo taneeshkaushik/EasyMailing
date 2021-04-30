@@ -9,7 +9,7 @@ import { encode, decode } from 'js-base64';
 import TextField from '@material-ui/core/TextField';
 import ProgressBar from '../usables/ProgressBar';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
-import {ListItem} from '@material-ui/core';
+import {ListItem , Checkbox , Typography} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
@@ -42,6 +42,38 @@ export default function SheetUpload(props) {
             console.log(row_temp);
             var col_setup = [];
             var row_setup = [];
+            col_setup.push({
+                Header: () => (
+                                <Checkbox
+                                    
+                
+                                    // onClick={(event) => {
+                                    // event.stopPropagation();
+                                    // }}
+                                    // checked={checkall}
+                                    // onChange={handleChangeAll}
+                                
+                                />
+                                ),
+                                accessor: "",
+                                Cell: row => {
+                                return (<Checkbox
+                
+                                    // name = {row.original.enrolmentId}
+                                    // checked={checklist[row.original.enrolmentId]}
+                                    // onChange = {handleChecked}
+                                    // onClick={(event) => {
+                                    // event.stopPropagation();
+                                    // }}
+               
+                                />
+                                )
+                                },
+                                className: "justify-center",
+                                sortable: false,
+                                width: 64
+                            }
+                )
             for (var i = 0; i < row_temp[0].length; i++) {
                 col_setup.push({
                     Header: row_temp[0][i],
@@ -51,7 +83,8 @@ export default function SheetUpload(props) {
                     className: "font-bold justify-center",
                 });
             }
-            console.log(col_setup);
+            
+            // console.log(col_setup);
             for (var i = 1; i < row_temp.length && row_temp[i].length > 1; i++) {
                 var temp = {};
                 for (var j = 0; j < row_temp[i].length; j++) {
@@ -108,10 +141,13 @@ export default function SheetUpload(props) {
             setIsApiLoaded(true);
             // list files if user is authenticated
             var subject = 'Subject: '+props.subject+'\n\n';
+            console.log(props.emailBody)
             props.row.map((value,index) => {
                 console.log(index);
                 var msg = 'To: ' + '<' + value.email + '>' + '\n';
                 msg += subject + props.body + '\n' ;
+                msg+='Content-Type: '+'text/html; charset=UTF-8\n';
+                msg+=props.emailBody+'\n';
                 for (var i in value) {
                     if (i == 'email' )
                         continue;
