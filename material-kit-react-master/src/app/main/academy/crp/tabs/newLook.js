@@ -68,14 +68,29 @@ export default function NewLook(props) {
 
     const [columns, setColumns] = React.useState(null);
     const [rows, setRows] = React.useState(null);
-    const [subject, setSubject] = React.useState('');
+    const [sub, setSubject] = React.useState('');
     const [body, setBody] = React.useState('');
     const [list, setList] = React.useState([]);
     const [content, setContent] = React.useState(null)
     const FIRST_TOUR = [
         {
+            target: ".aboutus",
+            content: "Click here to know about us and the product.",
+            disableBeacon: true,
+        },
+        {
+            target: ".tutorial",
+            content: "Refer here for a more detailed tutorial",
+            disableBeacon: true,
+        },
+        {
+            target: ".login",
+            content: "You can login from here using your gmail account",
+            disableBeacon: true,
+        },
+        {
             target: ".takeinput",
-            content: "Choose a  CSV file to tour more in Webiste from which you want to send emails it should have a column email in it for sure.",
+            content: "Choose a  CSV file to tour more in Website from which you want to send emails it should have a column email in it for sure.",
             disableBeacon: true,
         },
         {
@@ -106,6 +121,11 @@ export default function NewLook(props) {
         {
             target: ".send",
             content: "Send Email from here",
+            disableBeacon: true,
+        },
+        {
+            target: ".reset",
+            content: "Reset the page from here",
             disableBeacon: true,
         }
     ];
@@ -269,7 +289,7 @@ export default function NewLook(props) {
     * List files.
     */
     function sendMail() {
-        var subject = 'Subject: ' + subject + '\n\n';
+        var subject = 'Subject: ' + sub + '\n\n';
         console.log(emailBody)
         rows.map((value, index) => {
             console.log(index);
@@ -338,14 +358,6 @@ export default function NewLook(props) {
     return (
         <>
 
-            <div style={{ backgroundColor: "#0e1e25" }} className="min-h-300 h-300 justify-center">
-                <Button style={{ color: "white" }} component="span" className={classes.button} onClick={() => { setOpenAbout(true) }}>
-                    About Us
-        </Button>
-                {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className={classes.button} onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className={classes.button} onClick={handleClientLoad}>Login</Button>}
-
-
-            </div>
             <div className="demo-wrapper">
                 <JoyRide
                     callback={(data) => {
@@ -380,15 +392,24 @@ export default function NewLook(props) {
                             <div className="flex flex-col justify-center flex-1 ">
                                 <FuseAnimateGroup>
 
-                                    <div className="flex justify-center items-center">
+                            <div style={{ backgroundColor: "#0e1e25" }} className="min-h-300 h-300 justify-center">
+                                <Button  style={{ color: "white" }} component="span" color="primary" className="aboutus" onClick={() => { setOpenAbout(true) }}>
+                                    About Us
+                                </Button>
+                                <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
+                                <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
+                                {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className={classes.button} onClick={handleClientLoad}>Login</Button>}
 
-                                        <Typography className="py-0 sm:py-24 text-60 text-green" variant="h4"> ESMP </Typography>
+
+                            </div>
+
+                                    <div className="flex justify-center items-center">
+                                        <Typography className="py-0 sm:py-24 text-60 text-green" variant="h4"> ESMP - Easy and Secure Mailing Portal </Typography>
                                     </div>
                                     {/* <Button onClick={logout}>Logout</Button> */}
                                     <div className="flex justify-center items-center">
-                                        <p className="py-0 sm:py-24 text-20 " variant="h4"> Upload, Select, Click, Boom!!!  Mails Sent
-                                    <br></br>
-                                    We respect privacy. We do not collect any data.  </p>
+                                        <p className="py-0 sm:py-24 text-20 " variant="h4"> Upload, Select, Click, Boom!!!  Mails Sent </p>
+                    
 
                                     </div>
                                 </FuseAnimateGroup>
@@ -416,16 +437,15 @@ export default function NewLook(props) {
                             {signedInUser!=null && isApiLoaded==true&& rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
 
                             <ListItem>
-                                <ProgressBar color='secondary' progress={cnt} />
+                                <ProgressBar color='secondary' progress={cnt}  />
                                 <div className='p-5'>
                                     {cnt >= 100 ? <DoneAllIcon color='secondary'></DoneAllIcon> : null}
                                 </div>
                             </ListItem>
                             {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
-                            {rows != null && columns != null ? <Button color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
-                            {previewOpen == true ? <Preview columns={list} body={body} subject={subject} setPreviewOpen={setPreviewOpen} ></Preview> : null}
-                            <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "Purple", justify: "center" }} >Tutorial</Button>
-                            <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "Purple", justify: "center" }} >Take Tour </Button>
+                            {rows != null && columns != null ? <Button className={"reset"} color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
+                            {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
+
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
                         </div>
 
@@ -443,11 +463,12 @@ export default function NewLook(props) {
                                     <Grid item lg={4}>
 
                                         <TextField
-
+                                            value={sub}
                                             variant="outlined"
                                             label="Subject"
                                             className="subject"
                                             helperText="Please select Subject of Email"
+                                            
                                             onChange={handleSubjectChange}
                                         ></TextField>
                                     </Grid>
@@ -458,6 +479,7 @@ export default function NewLook(props) {
                                             helperText="Please Enter Opening Remarks of Email"
                                             multiline
                                             fullWidth
+                                            value={body}
                                             variant="outlined"
                                             minRows={6}
                                             onChange={handleBodyChange}
