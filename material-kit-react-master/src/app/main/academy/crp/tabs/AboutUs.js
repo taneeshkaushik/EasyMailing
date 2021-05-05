@@ -10,7 +10,7 @@ import Slide from '@material-ui/core/Slide';
 import MailPreview from './MailPreview'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-
+import AboutUsComponent from './AboutUsComponent';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -40,12 +40,12 @@ export default function FullScreenDialog(props) {
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-              <ArrowBackIcon/>
+              <ArrowBackIcon/> 
             </IconButton>
           </Toolbar>
         </AppBar>
         {/* Put your code here */}
-
+        <AboutUsComponent />
 
 
       </Dialog>

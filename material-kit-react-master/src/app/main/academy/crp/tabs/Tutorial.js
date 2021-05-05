@@ -38,7 +38,7 @@ export default function FullScreenDialog(props) {
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-              <ArrowBackIcon/>
+              <ArrowBackIcon/> 
             </IconButton>
           </Toolbar>
         </AppBar>

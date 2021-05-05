@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Tutorial from './Tutorial';
 
+import AboutUs from './AboutUs';
+
 import {
     Button,
     Card,
@@ -350,7 +352,6 @@ export default function NewLook(props) {
         document.getElementById('fileInput').value = '';
         setRows(null);
         setColumns(null);
-        logout();
         // window.location.reload()
     }
 
@@ -403,15 +404,15 @@ export default function NewLook(props) {
 
                             </div>
 
+
                                     <div className="flex justify-center items-center">
-                                        <Typography className="py-0 sm:py-24 text-60 text-green" variant="h4"> ESMP - Easy and Secure Mailing Portal </Typography>
+                                        <Typography variant="h3" style={{color:'green', paddingTop:70}}>ESMP</Typography>
                                     </div>
                                     {/* <Button onClick={logout}>Logout</Button> */}
                                     <div className="flex justify-center items-center">
-                                        <p className="py-0 sm:py-24 text-20 " variant="h4"> Upload, Select, Click, Boom!!!  Mails Sent </p>
-                    
-
+                                        <p className="py-0 sm:py-24 text-20 " variant="h4"> Easy and Secure Mailing Portal </p>
                                     </div>
+
                                 </FuseAnimateGroup>
                             </div>
                         </div>
@@ -445,7 +446,7 @@ export default function NewLook(props) {
                             {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
                             {rows != null && columns != null ? <Button className={"reset"} color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
                             {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
-
+                            {openAbout == true ? <AboutUs setOpenAbout = {setOpenAbout} ></AboutUs> :null }
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
                         </div>
 
