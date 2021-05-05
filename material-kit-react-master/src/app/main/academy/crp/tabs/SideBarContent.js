@@ -56,11 +56,11 @@ export default function SideBarContent(props) {
       >
         <List className="columnlist">
             
-        <ListItem style ={{fontSize:"22px"}}>Select Columns</ListItem>
+        <ListItem ref={props.ref} style ={{fontSize:"22px"}}>Select Columns</ListItem>
         <Divider  />
         {props.columns != null ?
             props.columns.map((value) => {
-                if (value.Header != 'email' && value.accessor != '')
+                if (value.Header.toLowerCase() != 'email' && value.accessor != '')
                     return (
                         <ListItem>
                             <Checkbox

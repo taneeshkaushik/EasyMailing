@@ -168,7 +168,6 @@ export default function NewLook(props) {
 
         if (event.target.files[0] == undefined)
             return;
-
         setFileState({ selectedFile: event.target.files[0] });
         console.log(event.target.result);
         const reader = new FileReader()
@@ -217,27 +216,35 @@ export default function NewLook(props) {
             //                     width: 64
             //                 }
             //     )
+            var isEmail = false;
             for (var i = 0; i < row_temp[0].length; i++) {
                 col_setup.push({
                     Header: row_temp[0][i],
-                    accessor: row_temp[0][i],
+                    accessor: row_temp[0][i].replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase(),
                     sortable: true,
                     filterable: true,
                     className: "font-bold justify-center",
                 });
+                if (row_temp[0][i].toLowerCase() == 'email')
+                    isEmail = true;
             }
 
             // console.log(col_setup);
             for (var i = 1; i < row_temp.length && row_temp[i].length > 1; i++) {
                 var temp = {};
                 for (var j = 0; j < row_temp[i].length; j++) {
-                    temp[row_temp[0][j]] = row_temp[i][j];
+                    temp[row_temp[0][j].replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase()] = row_temp[i][j];
                 }
                 row_setup.push(temp);
             }
             console.log(row_setup);
-            setColumns(col_setup);
-            setRows(row_setup);
+            if (isEmail) {
+                setColumns(col_setup);
+                setRows(row_setup);
+            }
+            else {
+                alert("Email field not found");
+            }
         };
         reader.readAsText(event.target.files[0])
         setCnt(0);
@@ -284,7 +291,7 @@ export default function NewLook(props) {
             // list files if user is authenticated
         }
         // else {
-                // handleAuthClick();
+        // handleAuthClick();
         // }
     };
     /**
@@ -292,33 +299,48 @@ export default function NewLook(props) {
     */
     function sendMail() {
         var subject = 'Subject: ' + sub + '\n\n';
+        // var ctype="Content-type: text/html;charset=iso-8859-1\n\n"
         console.log(emailBody)
+        console.log(list);
+        var new_list = [...list]
+        console.log(new_list);
+        for (var i = 0; i < new_list.length; i++) {
+            new_list[i] = new_list[i].replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase();
+        }
+        console.log(new_list);
+        // console.log(list);
         rows.map((value, index) => {
-            console.log(index);
-            var msg = 'To: ' + '<' + value.email + '>' + '\n';
-            msg += subject + body + '\n';
+            var to = 'To: ' + '<' + value.email + '>' + '\r\n';
+            var msg = to + subject + body + '\n';
+            // console.log(index);
+            // console.log(value);
             // msg+='Content-Type: '+'text/html; charset=UTF-8\n';
-            msg += emailBody + '\n';
+            // msg += emailBody + '\n';
             for (var i in value) {
-                if (i == 'email')
+                // console.log(i,value[i]);
+                console.log(i.toLowerCase());
+                if (i.toLowerCase() == 'email')
                     continue;
-                if (list.indexOf(i) == -1)
+                if (new_list.indexOf(i) == -1)
                     continue
-                msg += i;
+                var ind = new_list.indexOf(i);
+                msg += list[ind];
                 msg += ' :- ';
                 msg += value[i];
                 msg += '\n';
             }
+            var temp = encode(msg);
             gapi.client.gmail.users.messages.send({
                 'userId': 'me',
-                "raw": encode(msg)
+                "raw": temp
             }).then(function (response) {
                 // alert("Email sent successfully");
+                setCnt((prevProgress) => (prevProgress + (100 / rows.length)) > 100 ? 100 : prevProgress + (100 / rows.length));
             })
                 .catch((err) => {
                     console.log(err);
                 });
-            setCnt((prevProgress) => (prevProgress + (100 / rows.length)) > 100 ? 100 : prevProgress + (100 / rows.length));
+
         });
         // const tempcnt=cnt;
         // setCnt(tempcnt+(100/rows.length))
@@ -344,18 +366,18 @@ export default function NewLook(props) {
     }
     useEffect(() => {
         console.log('useeffect');
-        if(isApiLoaded==true)
+        if (isApiLoaded == true)
             handleAuthClick();
-    },[isApiLoaded])
+    }, [isApiLoaded])
 
     function resetHandle() {
         document.getElementById('fileInput').value = '';
         setRows(null);
         setColumns(null);
+        setList([]);
         // window.location.reload()
     }
-
-
+    const ref = React.useRef();
     return (
         <>
 
@@ -393,20 +415,20 @@ export default function NewLook(props) {
                             <div className="flex flex-col justify-center flex-1 ">
                                 <FuseAnimateGroup>
 
-                            <div style={{ backgroundColor: "#0e1e25" }} className="min-h-300 h-300 justify-center">
-                                <Button  style={{ color: "white" }} component="span" color="primary" className="aboutus" onClick={() => { setOpenAbout(true) }}>
-                                    About Us
+                                    <div style={{ backgroundColor: "#0e1e25" }} className="min-h-300 h-300 justify-center">
+                                        <Button style={{ color: "white" }} component="span" color="primary" className="aboutus" onClick={() => { setOpenAbout(true) }}>
+                                            About Us
                                 </Button>
-                                <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
-                                <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
-                                {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login</Button>}
+                                        <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
+                                        <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
+                                        {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login</Button>}
 
 
-                            </div>
+                                    </div>
 
 
                                     <div className="flex justify-center items-center">
-                                        <Typography variant="h3" style={{color:'green', paddingTop:70}}>ESMP</Typography>
+                                        <Typography variant="h3" style={{ color: 'green', paddingTop: 70 }}>ESMP</Typography>
                                     </div>
                                     {/* <Button onClick={logout}>Logout</Button> */}
                                     <div className="flex justify-center items-center">
@@ -429,16 +451,16 @@ export default function NewLook(props) {
                     >
                         <div className='flex justify-center p-30'>
                             {/* <SheetUpload color="inherit" row={rows} emailBody={emailBody} columns={columns} subject={subject} body={body} list={list} setColumns={setColumns.bind(this)} setRows={setRows.bind(this)} /> */}
-                            <input id="fileInput" className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={() => { setCnt(0) }} />
+                            <input id="fileInput" className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={() => {resetHandle();}} />
                             <label htmlFor="outlined-button-file">
                             </label>
 
                         </div>
                         <div>
-                            {signedInUser!=null && isApiLoaded==true&& rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
+                            {signedInUser != null && isApiLoaded == true && rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
 
                             <ListItem>
-                                <ProgressBar color='secondary' progress={cnt}  />
+                                <ProgressBar color='secondary' progress={cnt} />
                                 <div className='p-5'>
                                     {cnt >= 100 ? <DoneAllIcon color='secondary'></DoneAllIcon> : null}
                                 </div>
@@ -446,7 +468,7 @@ export default function NewLook(props) {
                             {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
                             {rows != null && columns != null ? <Button className={"reset"} color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
                             {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
-                            {openAbout == true ? <AboutUs setOpenAbout = {setOpenAbout} ></AboutUs> :null }
+                            {openAbout == true ? <AboutUs setOpenAbout={setOpenAbout} ></AboutUs> : null}
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
                         </div>
 
@@ -456,10 +478,10 @@ export default function NewLook(props) {
                         {rows != null && columns != null ?
                             <Grid container lg={12} >
                                 <Grid container lg={3}>
-                                    <SideBarContent columns={columns} handleUpdate={handleUpdate}></SideBarContent>
+                                    <SideBarContent columns={columns} handleUpdate={handleUpdate} ref={ref}></SideBarContent>
                                 </Grid>
                                 <Grid container style={{ marginTop: 30 }} lg={9}>
-                            
+
                                     <Grid container lg={4}>
 
                                         <TextField
@@ -468,7 +490,7 @@ export default function NewLook(props) {
                                             label="Subject"
                                             className="subject"
                                             helperText="Please select Subject of Email"
-                                            
+
                                             onChange={handleSubjectChange}
                                         ></TextField>
                                     </Grid>

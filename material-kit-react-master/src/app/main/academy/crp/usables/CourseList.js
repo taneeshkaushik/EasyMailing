@@ -17,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function CourseList(props) {
-    console.log(props.data, "jkjhdafkjagljkafhglha;luojhgb")
+    console.log(props.data)
+    // console.log(props.data[0]['PMT (excl. last marks) out of 45.5']);
     const classes = useStyles();
-    
-  
+
 
     function exportTableToExcel() {
 
