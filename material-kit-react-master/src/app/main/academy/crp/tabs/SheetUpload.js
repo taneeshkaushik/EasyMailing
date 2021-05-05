@@ -23,54 +23,55 @@ const useStyles = makeStyles(theme => ({
 export default function SheetUpload(props) {
     const classes = useStyles();
     const [fileState, setFileState] = React.useState({});
-    const [signedInUser, setSignedInUser] = useState();
+    const [signedInUser, setSignedInUser] = useState(null);
     const [isLoadingGoogleMailApi, setIsLoadingGoogleMailApi] = useState(false);
     const [isApiLoaded, setIsApiLoaded] = useState(false);
+    const [logoutstatus,setLogout]=React.useState(false);
     const [cnt, setCnt] = useState(0);
     let f = 0;
 
-    const [checklist , setCheckedState] = useState(props.hardcode);
-    const [checkall , setCheckAll] = useState(false);
-    const ref = useRef();
-    console.log("THis is checklist" , checklist);
+    // const [checklist , setCheckedState] = useState(props.hardcode);
+    // const [checkall , setCheckAll] = useState(false);
+    // const ref = useRef();
+    // console.log("THis is checklist" , checklist);
 
-    const handleChecked = (event) => {
-        console.log(event.target.name)
-        console.log(event.target.value)
-        let t = [...checklist];
+    // const handleChecked = (event) => {
+    //     console.log(event.target.name)
+    //     console.log(event.target.value)
+    //     let t = [...checklist];
         
-        t[event.target.name]= event.target.checked;
-        setCheckedState(t);
+    //     t[event.target.name]= event.target.checked;
+    //     setCheckedState(t);
         // setCheckedState({ ...checklist, [event.target.name]: event.target.checked });
-    };
+    // };
 
-      function handleChangeAll(event){
+    //   function handleChangeAll(event){
 
-        setCheckAll(!checkall);
-        const x ={};
-        if (checkall == true){
+    //     setCheckAll(!checkall);
+    //     const x ={};
+    //     if (checkall == true){
     
-          Object.keys(checklist).forEach(function(key) {
-            // console.log(key, checklist[key]);
-            x[key] = false
+    //       Object.keys(checklist).forEach(function(key) {
+    //         // console.log(key, checklist[key]);
+    //         x[key] = false
       
-            });
+    //         });
     
     
-        }
-        else{
+    //     }
+    //     else{
          
-          Object.keys(checklist).forEach(function(key) {
-            // console.log(key, checklist[key]);
-            x[key] = true
+    //       Object.keys(checklist).forEach(function(key) {
+    //         // console.log(key, checklist[key]);
+    //         x[key] = true
       
-            });
-        }
-        setCheckedState(x);
+    //         });
+    //     }
+    //     setCheckedState(x);
 
-        // ref.current.target = checkall;
+    //     // ref.current.target = checkall;
     
-      }
+    //   }
     
     const onFileChange = (event) => {
 
@@ -178,7 +179,7 @@ export default function SheetUpload(props) {
 
                     // Handle the initial sign-in state.
                     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-                    //gapi.auth2.getAuthInstance().signOut();
+                    gapi.auth2.getAuthInstance().signOut();
                 },
                 function (error) { }
             );
@@ -191,33 +192,34 @@ export default function SheetUpload(props) {
             setIsLoadingGoogleMailApi(false);
             setIsApiLoaded(true);
             // list files if user is authenticated
-            var subject = 'Subject: '+props.subject+'\n\n';
-            console.log(props.emailBody)
-            props.row.map((value,index) => {
-                console.log(index);
-                var msg = 'To: ' + '<' + value.email + '>' + '\n';
-                msg += subject + props.body + '\n' ;
-                msg+='Content-Type: '+'text/html; charset=UTF-8\n';
-                msg+=props.emailBody+'\n';
-                for (var i in value) {
-                    if (i == 'email' )
-                        continue;
-                    if (props.list.indexOf(i)==-1)
-                        continue
-                    msg += i;
-                    msg += ' :- ';
-                    msg += value[i];
-                    msg += '\n';
-                }
-                
-                sendMail(encode(msg));
-            });
            
-        } else {
-            // prompt user to sign in
-            handleAuthClick();
+        }
+        else{
+                handleAuthClick();
         }
     };
+    function sendEmail(){
+        var subject = 'Subject: '+props.subject+'\n\n';
+        console.log(props.emailBody)
+        props.row.map((value,index) => {
+            console.log(index);
+            var msg = 'To: ' + '<' + value.email + '>' + '\n';
+            msg += subject + props.body + '\n' ;
+            // msg+='Content-Type: '+'text/html; charset=UTF-8\n';
+            msg+=props.emailBody+'\n';
+            for (var i in value) {
+                if (i == 'email' )
+                    continue;
+                if (props.list.indexOf(i)==-1)
+                    continue
+                msg += i;
+                msg += ' :- ';
+                msg += value[i];
+                msg += '\n';
+            }
+            sendMail(encode(msg));
+        });
+    }
 
     /**
     * List files.
@@ -228,13 +230,14 @@ export default function SheetUpload(props) {
             "raw": message
         }).then(function (response) {
             // alert("Email sent successfully");
-        setCnt((prevProgress) => (prevProgress >= 100 ? prevProgress : prevProgress +  (100 / props.row.length) ));
-
+        setCnt((prevProgress) => (prevProgress +  (100 / props.row.length) )>100?100:prevProgress +  (100 / props.row.length));
         })
             .catch((err) => {
                 console.log(err);
             });
-        setCnt((prevProgress) => (prevProgress >= 100 ? prevProgress : prevProgress +  (100 / props.row.length) ));
+        setCnt((prevProgress) => (prevProgress +  (100 / props.row.length) )>100?100:prevProgress +  (100 / props.row.length));
+            // const tempcnt=cnt;
+        // setCnt(tempcnt+(100/props.row.length))
     }
 
 
@@ -244,17 +247,22 @@ export default function SheetUpload(props) {
     const handleAuthClick = (event) => {
         gapi.auth2.getAuthInstance().signIn();
     };
+    const logout=(event) => {
+        if (signedInUser!=null){
+            gapi.auth2.getAuthInstance().signOut().then(()=>{
+                alert('Signed Out Successfully');
+                setSignedInUser(null);
+                setLogout(true);
+            });
+        }
+    }
     return (
         <div>
-            <input color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={()=>{setCnt(0)}}/>
+            <input className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={()=>{setCnt(0)}}/>
             <label htmlFor="outlined-button-file">
-    
             </label>
-            {/* {rows != null && columns != null ? <CourseList columns={columns} data={rows} /> : null} */}
-            <Button variant="outlined" color="inherit" component="span" className={classes.button} onClick={() => { handleClientLoad() }}>
-                Send Email
-            </Button>
-
+            {props.row != null && props.columns != null?<Button variant="outlined" color="inherit" component="span" className={classes.button+" send"}  onClick={() => {handleClientLoad()}}>Send Email</Button>:null}
+            {/* {signedInUser!=null?<Button variant="outlined" color="inherit" component="span" className={classes.button} onClick={logout}>Logout</Button>:null} */}
             <ListItem>
                 <ProgressBar color ='secondary' progress ={cnt} />
                 <div className='p-5'>

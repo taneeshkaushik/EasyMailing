@@ -10,7 +10,6 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import "./table.css";
 const useStyles = makeStyles((theme) => ({
-
     table: {
         backgroundColor: "green"
     },
@@ -21,6 +20,7 @@ export default function CourseList(props) {
     console.log(props.data, "jkjhdafkjagljkafhglha;luojhgb")
     const classes = useStyles();
     
+  
 
     function exportTableToExcel() {
 
@@ -66,13 +66,14 @@ export default function CourseList(props) {
     return (
         <div>
             <Button onClick={exportTableToExcel}>Export</Button>
+            {/* <Button onClick = {resetTable}>Reset</Button> */}
             <FuseAnimate animation="transition.slideUpIn" delay={300}>
 
                 <ReactTable
                     id="dataTable"
-                    className="-striped -highlight h-full sm:rounded-16 overflow-hidden "
+                    className="-striped -highlight h-full sm:rounded-16 overflow-hidden finaltable"
                     // className={classes.table}
-                    getTrProps={onRowClick}
+                    // getTrProps={onRowClick}
                         // return {
                         //     className: "cursor-pointer",
                         //     onClick  : (e, handleOriginal) => {
