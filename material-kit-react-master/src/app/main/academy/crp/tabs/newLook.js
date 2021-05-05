@@ -85,7 +85,7 @@ export default function NewLook(props) {
         },
         {
             target: ".login",
-            content: "You can login from here using your gmail account",
+            content: "You can login from here using your gmail account.If the Send Email button is not visible after sheet upload then press here.",
             disableBeacon: true,
         },
         {
@@ -398,7 +398,7 @@ export default function NewLook(props) {
                                 </Button>
                                 <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
                                 <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
-                                {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className={classes.button} onClick={handleClientLoad}>Login</Button>}
+                                {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login</Button>}
 
 
                             </div>
