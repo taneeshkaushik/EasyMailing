@@ -48,6 +48,7 @@ export default function FullScreenDialog(props) {
         </AppBar>
         
         <MailPreview columns={props.columns} body={props.body} subject={props.subject}></MailPreview>
+        
       </Dialog>
     </div>
   );

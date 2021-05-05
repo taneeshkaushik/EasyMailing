@@ -4,7 +4,6 @@ import MailHeader from './MailHeader.js'
 import { FuseAnimate, FuseAnimateGroup, FusePageSimple } from '@fuse'
 import SideBarHeader from './SideBarHeader.js'
 import SideBarContent from './SideBarContent'
-import RichTextEditor from './TinyMce'
 import { Editor } from '@tinymce/tinymce-react';
 import JoyRide from "react-joyride";
 import Preview from './Preview.js';

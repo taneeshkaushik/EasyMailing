@@ -1,90 +1,80 @@
+
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
+import { makeStyles  } from '@material-ui/styles';
+
+import AppBar from '@material-ui/core/AppBar';
+import {Toolbar , Container, Dialog , DialogContent} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+import MailPreview from './MailPreview'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    position: 'relative',
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
+}));
 
-const styles = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DialogTitle = withStyles(styles)((props) => {
-  const { children, classes, onClose, ...other } = props;
-  return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-});
-
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
-
-const DialogActions = withStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
-
-export default function Tutorial(props) {
-
-    const [open, setOpen] = React.useState(true);
-    
+export default function FullScreenDialog(props) {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(true);
   const handleClose = () => {
     props.setOpenTutorial(false);
   };
 
   return (
     <div>
-      
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        <Typography variant='h4' gutterBottom>
-          Tutorial
-          </Typography> 
-        </DialogTitle>
-        <DialogContent dividers>
-          <Typography variant='h5' gutterBottom>
-          You can click on the take tour button for taking a tour of the website and understand the working.
-          </Typography>
-          <Typography variant='h6' gutterBottom>
-          Step-1: Click on the upload file button.
-          </Typography>
-          <Typography variant='h6' gutterBottom>
-          Step-2: Select the columns of the sheet that you want to send you can sort and filter from the table.
-          </Typography>
-          <Typography variant='h6' gutterBottom>
-          Step-3: You can type a subject and a body to be sent above the columns.           </Typography>
-          <Typography variant='h6' gutterBottom>
-          Press sendEmail button and boom mails are send. </Typography>
-          <Typography variant='h5' style={{color:"orange", justify:"center"}} gutterBottom>
-          Happy Mailing </Typography>
 
-        </DialogContent>
-        
+      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+              <ArrowBackIcon/>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        {/* Put your code here */}
+
+        <DialogContent >
+          <Container >
+           <Typography variant='h5' gutterBottom>
+           You can click on the take tour button for taking a tour of the website and understand the working.
+           </Typography>
+           <Typography variant='h6' gutterBottom>
+           Step-1: Click on the upload file button to view the sheet.
+           </Typography> 
+           <img src={require("./images/1.png")} alt="" style={{width:1200 , height:700}} />
+           <img src={require("./images/2.png")} alt="" style={{width:1200 , height:700}} />
+           <Typography variant='h6' gutterBottom>
+           Step-2: Set the Email subject and body of the email.
+           </Typography> 
+           <img src={require("./images/3.png")} alt="" style={{width:1200 , height:700}} />
+           <img src={require("./images/4.png")} alt="" style={{width:1200 , height:700}} />
+           <Typography variant='h6' gutterBottom>
+           Step-3: Check all the boxes which you want to send in the email.
+           </Typography>
+           <img src={require("./images/5.png")} alt="" style={{width:1200 , height:700}} />
+           <Typography variant='h6' gutterBottom>
+           Step-4: Click to preview the email.
+           </Typography>
+           <img src={require("./images/6.png")} alt="" style={{width:1200 , height:700}} />
+           <Typography variant='h6' gutterBottom> Step-5: Press Send email button and boom mails are send. </Typography>
+           <img src={require("./images/7.png")} alt="" style={{width:1200 , height:700}} />
+           <Typography variant='h3' style={{color:"orange", justify:"center"}} gutterBottom>
+           Happy Mailing !!!
+           </Typography>
+           </Container>
+         </DialogContent>
+
       </Dialog>
     </div>
   );

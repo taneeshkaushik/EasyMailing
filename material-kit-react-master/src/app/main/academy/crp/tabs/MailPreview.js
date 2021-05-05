@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Avatar, Divider, Icon, IconButton, Typography} from '@material-ui/core';
+import {Avatar, Container, Divider, Icon, IconButton, Typography} from '@material-ui/core';
 import {FuseAnimate} from '@fuse';
 
 
@@ -7,6 +7,7 @@ import {FuseAnimate} from '@fuse';
 export default function MailPreview(props)
 {   
     return (
+        <Container>
         <div className="p-16 sm:p-24">
             <div className="flex items-center justify-between overflow-hidden">
 
@@ -39,6 +40,7 @@ export default function MailPreview(props)
                 </div>
             </FuseAnimate>
         </div>
+        </Container>
     );
 }
 
