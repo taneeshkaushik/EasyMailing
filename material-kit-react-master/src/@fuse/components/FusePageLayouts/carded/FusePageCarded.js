@@ -7,8 +7,8 @@ import FusePageCardedHeader from './FusePageCardedHeader';
 import * as PropTypes from 'prop-types';
 
 const drawerWidth = 220;
-const headerHeight = 350;
-const toolbarHeight = 120;
+const headerHeight = 450;
+const toolbarHeight = 100;
 const headerContentHeight = headerHeight - toolbarHeight;
 
 const useStyles = makeStyles(theme => ({
