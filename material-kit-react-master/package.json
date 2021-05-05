@@ -55,6 +55,7 @@
         "react-frame-component": "4.1.0",
         "react-google-charts": "^3.0.15",
         "react-helmet": "^6.1.0",
+        "react-joyride": "^2.3.0",
         "react-masonry-css": "1.0.12",
         "react-minimal-pie-chart": "^8.1.0",
         "react-number-format": "4.0.8",
