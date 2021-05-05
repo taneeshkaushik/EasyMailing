@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { makeStyles  } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 
 import AppBar from '@material-ui/core/AppBar';
-import {Toolbar , Container, Dialog , DialogContent} from '@material-ui/core';
+import { Toolbar, Container, Dialog, DialogContent } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -38,42 +38,79 @@ export default function FullScreenDialog(props) {
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-              <ArrowBackIcon/> 
+              <ArrowBackIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
         {/* Put your code here */}
 
         <DialogContent >
-          <Container >
-           <Typography variant='h5' gutterBottom>
-           You can click on the take tour button for taking a tour of the website and understand the working.
+          <Typography variant='h5' gutterBottom style={{paddingLeft:200}}>
+            You can click on the take tour button for taking a tour of the website and understand the working.
+          </Typography>
+          <Container style={{ paddingLeft: 200 }}>
+
+            <Typography variant='h5' gutterBottom style={{paddingLeft:150}}>
+              Step-1: Login using your <strong>college email ID</strong>.
+           <br></br>
+              <br></br>
+            </Typography>
+            <img src={"static/images/1.png"} alt="" style={{ width: 750, height: 525 }} />
+            <Typography variant='h5' gutterBottom style={{paddingLeft:75}}>
+              <br></br>
+              <br></br>
+           Step-2: Click on the upload file button to view the sheet.
+           <br></br>
+              <br></br>
+            </Typography>
+            <img src={"static/images/3.jpeg"} alt="" style={{ width: 750, height: 525 }} />
+            <Typography variant='h5' gutterBottom style={{paddingLeft:70}}>
+              <br></br>
+              <br></br>
+           Step-3: Set the Email subject and body of the email.
+           <br></br>
+              <br></br>
+            </Typography>
+            <img src={"static/images/4.png"} alt="" style={{ width: 750, height: 525, paddingRight: 10 }} />
+            <img src={"static/images/5.png"} alt="" style={{ width: 750, height: 525 }} />
+            <Typography variant='h5' gutterBottom>
+              <br></br>
+              <br></br>
+           Step-4: Check all the boxes which you want to send in the email.
+           <br></br>
+              <br></br>
+            </Typography>
+            <img src={"static/images/6.png"} alt="" style={{ width: 750, height: 525 }} />
+            <Typography variant='h5' gutterBottom style={{paddingLeft:150}}>
+              <br></br>
+              <br></br>
+           Step-5: Click to preview the email.
+           <br></br>
+              <br></br>
+            </Typography>
+            <img src={"static/images/7.png"} alt="" style={{ width: 750, height: 525 }} />
+            <Typography variant='h5' gutterBottom>
+              <br></br>
+              <br></br>
+           Step-6: Press Send email button and boom mails are send. </Typography>
+            <br></br>
+            <br></br>
+            <img src={"static/images/8.png"} alt="" style={{ width: 750, height: 525 }} />
+            <Typography variant='h5' gutterBottom style={{paddingLeft:70}}>
+              <br></br>
+              <br></br>
+           Step-7: Press reset to get back to the original page.
            </Typography>
-           <Typography variant='h6' gutterBottom>
-           Step-1: Click on the upload file button to view the sheet.
-           </Typography> 
-           <img src={require("./images/1.png")} alt="" style={{width:1200 , height:700}} />
-           <img src={require("./images/2.png")} alt="" style={{width:1200 , height:700}} />
-           <Typography variant='h6' gutterBottom>
-           Step-2: Set the Email subject and body of the email.
-           </Typography> 
-           <img src={require("./images/3.png")} alt="" style={{width:1200 , height:700}} />
-           <img src={require("./images/4.png")} alt="" style={{width:1200 , height:700}} />
-           <Typography variant='h6' gutterBottom>
-           Step-3: Check all the boxes which you want to send in the email.
+            <br></br>
+            <br></br>
+            <img src={"static/images/9.png"} alt="" style={{ width: 750, height: 525 }} />
+            <Typography variant='h3' style={{ color: "orange", justify: "center",paddingLeft:220 }} gutterBottom>
+              <br></br>
+              <br></br>
+           Happy Mailing !!
            </Typography>
-           <img src={require("./images/5.png")} alt="" style={{width:1200 , height:700}} />
-           <Typography variant='h6' gutterBottom>
-           Step-4: Click to preview the email.
-           </Typography>
-           <img src={require("./images/6.png")} alt="" style={{width:1200 , height:700}} />
-           <Typography variant='h6' gutterBottom> Step-5: Press Send email button and boom mails are send. </Typography>
-           <img src={require("./images/7.png")} alt="" style={{width:1200 , height:700}} />
-           <Typography variant='h3' style={{color:"orange", justify:"center"}} gutterBottom>
-           Happy Mailing !!!
-           </Typography>
-           </Container>
-         </DialogContent>
+          </Container>
+        </DialogContent>
 
       </Dialog>
     </div>
