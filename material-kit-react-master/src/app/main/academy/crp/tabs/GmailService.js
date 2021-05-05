@@ -100,13 +100,13 @@ export default function Gmail() {
                         enter={{
                             animation: "transition.slideUpBigIn"
                         }}
-                        className="flex flex-wrap py-24"
+                        className="flex justify-center flex-wrap py-24"
                     >
+                        <div className='flex justify-center p-24'>
+                            <SheetUpload color="inherit" row={rows} columns={columns} subject={subject} body={body} list={list} setColumns={setColumns.bind(this)} setRows={setRows.bind(this)} />
+                        </div>
                         {rows != null && columns != null ?
                             <Container>
-                                {rows != null && columns != null ?
-                                    <CourseList columns={columns} data={rows} />
-                                    : null}
                                 <ListItem>
                                     {rows != null && columns != null ?
                                         columns.map((value) => {
@@ -130,24 +130,28 @@ export default function Gmail() {
                                 <TextField
                                     id="Subject"
                                     label="Subject"
+
                                     helperText="Please select Subject of Email"
                                     onChange={handleSubjectChange}
                                 ></TextField>
                                 <br></br>
                                 <TextField
                                     id="body"
-                                    label="body"
+                                    // label="body"
                                     helperText="Please Enter Opening Remarks of mail"
                                     multiline
+                                    variant="outlined"
+                                    minRows = {5}
                                     onChange={handleBodyChange}
                                 ></TextField>
+
+                                {rows != null && columns != null ?
+                                    <CourseList columns={columns} data={rows} />
+                                    : null}
+
                             </Container>
                             : null}
                     </FuseAnimateGroup>
-
-                    <div className='flex justify-center p-24'>
-                        <SheetUpload color="inherit" row={rows} columns={columns} subject={subject} body={body} list={list} setColumns={setColumns.bind(this)} setRows={setRows.bind(this)} />
-                    </div>
 
                 </div>
 

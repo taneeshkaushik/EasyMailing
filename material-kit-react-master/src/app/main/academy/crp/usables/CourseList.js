@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import ReactTable from "react-table";
 import history from '@history';
 import Button from '@material-ui/core/Button';
-// import {CSVLink, CSVDownload} from 'react-csv';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 
@@ -21,38 +20,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CourseList(props) {
     console.log(props.data, "jkjhdafkjagljkafhglha;luojhgb")
     const classes = useStyles();
-    const cols = [
-        {
-            Header: () => (
-                <Checkbox
-                    onClick={(event) => {
-                        event.stopPropagation();
-                    }}
-                    onChange={(event) => {
-                        // event.target.checked ? dispatch(Actions.selectAllContacts()) : dispatch(Actions.deSelectAllContacts());
-                    }}
-                // checked={selectedContactIds.length === Object.keys(contacts).length && selectedContactIds.length > 0}
-                // indeterminate={selectedContactIds.length !== Object.keys(contacts).length && selectedContactIds.length > 0}
-                />
-            ),
-            accessor: "",
-            // Cell: row => {
-            //     const ind=row.index;
-            //     const [value,setValue]=React.useState(false);
-            //     return (<Checkbox
-            //         onClick={(event) => {
-            //             console.log(event.target.checked)
-            //             event.stopPropagation();
-            //         }}
-            //     />
-            //     )
-            // },
-            className: "justify-center",
-            sortable: false,
-            width: 64
-        },
-    ];
-
+    
 
     function exportTableToExcel() {
 
@@ -122,24 +90,7 @@ export default function CourseList(props) {
                         props.columns
                     }
 
-                    // columns={[
-
-                    //     // {
-                    //     //     // Header   : () => (
-                    //     //         // selectedContactIds.length > 0 && (
-                    //     //             // <ContactsMultiSelectMenu/>
-                    //     //         // )
-                    //     //     // ),
-                    //     //     accessor : "avatar",
-                    //     //     Cell     : row => (
-                    //     //         <Avatar className="mr-8" alt={row.original.name} src={row.value}/>
-                    //     //     ),
-                    //     //     className: "justify-center",
-                    //     //     width    : 64,
-                    //     //     sortable : false
-                    //     // },
-                    //    
-                    // ]}
+                   
                     defaultPageSize={5}
                     noDataText="Nothing found"
                 />

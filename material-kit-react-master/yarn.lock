@@ -6290,6 +6290,11 @@ internmap@^1.0.0:
   resolved "https://registry.yarnpkg.com/internmap/-/internmap-1.0.0.tgz#3c6bf0944b0eae457698000412108752bbfddb56"
   integrity sha512-SdoDWwNOTE2n4JWUsLn4KXZGuZPjPF9yyOGc8bnfWnBQh7BD/l80rzSznKc/r4Y0aQ7z3RTk9X+tV4tHBpu+dA==
 
+intro.js-react@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/intro.js-react/-/intro.js-react-0.3.0.tgz#d37e69beae9d732551c37050a739bd7330da3a57"
+  integrity sha512-9rIAZ4k1eh2J06XNWIg43RnG1GmFuCtpnTpf0u4lGW7X4ARh+ZjDVh/r2P8SO45+QOhYi45hy+ql2ASLOe6HoA==
+
 invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
@@ -11820,6 +11825,13 @@ tiny-warning@^1.0.0, tiny-warning@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.2.tgz#1dfae771ee1a04396bdfde27a3adcebc6b648b28"
   integrity sha512-rru86D9CpQRLvsFG5XFdy0KdLAvjdQDyZCsRcuu60WtzFylDM3eAWSxEVz5kzL2Gp544XiUvPbVKtOA/txLi9Q==
+
+tinymce-react@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/tinymce-react/-/tinymce-react-1.3.2.tgz#7afacfe11c53df89201272b90d8b792e6bebf64e"
+  integrity sha1-evrP4RxT34kgEnK5DYt5Lmvr9k4=
+  dependencies:
+    uuid "^3.0.1"
 
 tinymce@^5.6.2:
   version "5.6.2"
