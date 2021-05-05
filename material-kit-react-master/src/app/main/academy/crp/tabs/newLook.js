@@ -36,7 +36,7 @@ import {
     Dialog
 } from '@material-ui/core';
 import CourseList from '../usables/CourseList'
-import { makeStyles  } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 // import SheetUpload from './SheetUpload';
 
 import { useEffect, useState, useRef } from 'react';
@@ -46,8 +46,6 @@ import { encode, decode } from 'js-base64';
 import ProgressBar from '../usables/ProgressBar';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-import AboutUs from './AboutUs';
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -65,9 +63,9 @@ export default function NewLook(props) {
     const [signedInUser, setSignedInUser] = useState(null);
     const [isLoadingGoogleMailApi, setIsLoadingGoogleMailApi] = useState(false);
     const [isApiLoaded, setIsApiLoaded] = useState(false);
-    const [logoutstatus,setLogout]=React.useState(false);
+    const [logoutStatus, setLogout] = React.useState(false);
     const [cnt, setCnt] = useState(0);
-    const [openAbout ,setOpenAbout] = React.useState(false);
+    const [openAbout, setOpenAbout] = React.useState(false);
 
     const [columns, setColumns] = React.useState(null);
     const [rows, setRows] = React.useState(null);
@@ -120,7 +118,7 @@ export default function NewLook(props) {
     const handleBodyChange = (event) => {
         setBody(event.target.value);
     }
-    const [emailBody, setEmailBody] = React.useState('1');
+    const [emailBody, setEmailBody] = React.useState('');
     const handleEditorChange = (content, event) => {
         setEmailBody(content);
     }
@@ -144,12 +142,12 @@ export default function NewLook(props) {
     const [previewOpen, setPreviewOpen] = React.useState(false);
     const [openTutorial, setOpenTutorial] = React.useState(false);
 
-    
+
     const onFileChange = (event) => {
 
-        if(event.target.files[0]==undefined)
-            return; 
-        
+        if (event.target.files[0] == undefined)
+            return;
+
         setFileState({ selectedFile: event.target.files[0] });
         console.log(event.target.result);
         const reader = new FileReader()
@@ -169,27 +167,27 @@ export default function NewLook(props) {
             // col_setup.push({
             //     Header: () => (
             //                     <Checkbox
-                                    
+
             //                         ref = {ref}
             //                         onClick={(event) => {
             //                         event.stopPropagation();
             //                         }}
             //                         checked={checkall}
             //                         onChange={handleChangeAll}
-                                
+
             //                     />
             //                     ),
             //                     accessor: "",
             //                     Cell: row => {
             //                     return (<Checkbox
-                
+
             //                         name = {row.index}
             //                         checked={checklist[row.index]}
             //                         onChange = {handleChecked}
             //                         onClick={(event) => {
             //                         event.stopPropagation();
             //                         }}
-               
+
             //                     />
             //                     )
             //                     },
@@ -207,7 +205,7 @@ export default function NewLook(props) {
                     className: "font-bold justify-center",
                 });
             }
-            
+
             // console.log(col_setup);
             for (var i = 1; i < row_temp.length && row_temp[i].length > 1; i++) {
                 var temp = {};
@@ -246,6 +244,7 @@ export default function NewLook(props) {
             .then(
                 function () {
                     // Listen for sign-in state changes.
+                    setIsApiLoaded(true);
                     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
                     console.log('inside');
 
@@ -261,33 +260,28 @@ export default function NewLook(props) {
             console.log(gapi.auth2.getAuthInstance().currentUser)
             setSignedInUser(gapi.auth2.getAuthInstance().currentUser.le.wt);
             setIsLoadingGoogleMailApi(false);
-            setIsApiLoaded(true);
             // list files if user is authenticated
-           
         }
-        else{
-            if(logoutstatus==false)
-                handleAuthClick();
-            else
-                setLogout(false);
-        }
+        // else {
+                // handleAuthClick();
+        // }
     };
     /**
     * List files.
     */
     function sendMail() {
-        var subject = 'Subject: '+subject+'\n\n';
+        var subject = 'Subject: ' + subject + '\n\n';
         console.log(emailBody)
-        rows.map((value,index) => {
+        rows.map((value, index) => {
             console.log(index);
             var msg = 'To: ' + '<' + value.email + '>' + '\n';
-            msg += subject + body + '\n' ;
+            msg += subject + body + '\n';
             // msg+='Content-Type: '+'text/html; charset=UTF-8\n';
-            msg+=emailBody+'\n';
+            msg += emailBody + '\n';
             for (var i in value) {
-                if (i == 'email' )
+                if (i == 'email')
                     continue;
-                if (list.indexOf(i)==-1)
+                if (list.indexOf(i) == -1)
                     continue
                 msg += i;
                 msg += ' :- ';
@@ -296,17 +290,16 @@ export default function NewLook(props) {
             }
             gapi.client.gmail.users.messages.send({
                 'userId': 'me',
-                "raw": msg
+                "raw": encode(msg)
             }).then(function (response) {
                 // alert("Email sent successfully");
-            setCnt((prevProgress) => (prevProgress +  (100 / rows.length) )>100?100:prevProgress +  (100 / rows.length));
             })
                 .catch((err) => {
                     console.log(err);
                 });
-            setCnt((prevProgress) => (prevProgress +  (100 / rows.length) )>100?100:prevProgress +  (100 / rows.length));
+            setCnt((prevProgress) => (prevProgress + (100 / rows.length)) > 100 ? 100 : prevProgress + (100 / rows.length));
         });
-            // const tempcnt=cnt;
+        // const tempcnt=cnt;
         // setCnt(tempcnt+(100/rows.length))
     }
 
@@ -315,23 +308,30 @@ export default function NewLook(props) {
      *  Sign in the user upon button click.
      */
     const handleAuthClick = (event) => {
+        console.log('authclick');
         gapi.auth2.getAuthInstance().signIn();
     };
-    const logout=(event) => {
-        if (gapi.auth2.getAuthInstance().currentUser){
-            gapi.auth2.getAuthInstance().signOut().then(()=>{
+    const logout = (event) => {
+        if (gapi.auth2.getAuthInstance().currentUser) {
+            gapi.auth2.getAuthInstance().signOut().then(() => {
                 alert('Signed Out Successfully');
                 setSignedInUser(null);
+                setIsApiLoaded(false);
                 setLogout(true);
             });
         }
     }
+    useEffect(() => {
+        console.log('useeffect');
+        if(isApiLoaded==true)
+            handleAuthClick();
+    },[isApiLoaded])
 
-
-    function resetHandle(){
+    function resetHandle() {
         document.getElementById('fileInput').value = '';
         setRows(null);
         setColumns(null);
+        logout();
         // window.location.reload()
     }
 
@@ -339,14 +339,14 @@ export default function NewLook(props) {
     return (
         <>
 
-        <div style={{backgroundColor:"#0e1e25"}} className="min-h-300 h-300 justify-center">
-        <Button style={{color:"white" }} component="span" className={classes.button} onClick={() => { setOpenAbout(true) }}>
-            About Us
+            <div style={{ backgroundColor: "#0e1e25" }} className="min-h-300 h-300 justify-center">
+                <Button style={{ color: "white" }} component="span" className={classes.button} onClick={() => { setOpenAbout(true) }}>
+                    About Us
         </Button>
-        {signedInUser!=null?<Button variant="outlined" style={{color:"white" }} component="span" className={classes.button}  onClick={logout}>Logout</Button>:<Button variant="outlined" style={{color:"white"}} component="span" className={classes.button} onClick={handleClientLoad}>Login</Button>}
+                {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className={classes.button} onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className={classes.button} onClick={handleClientLoad}>Login</Button>}
 
-        
-    </div>
+
+            </div>
             <div className="demo-wrapper">
                 <JoyRide
                     callback={(data) => {
@@ -372,30 +372,30 @@ export default function NewLook(props) {
                 }}
                 header={
                     <div>
-                          
-                    <div className="justify-center items-center">
+
+                        <div className="justify-center items-center">
                             {/* <AppBar className="flex flex-col justify-center flex-1"  > */}
-                                
-                            
-           
-                        <div className="flex flex-col justify-center flex-1 ">
-                            <FuseAnimateGroup>
-                                  
-                                <div className="flex justify-center items-center">
-                                    
-                                    <Typography className="py-0 sm:py-24 text-60 text-green" variant="h4"> ESMP </Typography>
-                                </div>
-                                {/* <Button onClick={logout}>Logout</Button> */}
-                                <div className="flex justify-center items-center">
-                                    <p className="py-0 sm:py-24 text-20 " variant="h4"> Upload, Select, Click, Boom!!!  Mails Sent 
-                                    <br></br> 
-                                    We respect privacy. We do not collect any data.  </p>                         
-                                    
-                                </div>
-                            </FuseAnimateGroup>
+
+
+
+                            <div className="flex flex-col justify-center flex-1 ">
+                                <FuseAnimateGroup>
+
+                                    <div className="flex justify-center items-center">
+
+                                        <Typography className="py-0 sm:py-24 text-60 text-green" variant="h4"> ESMP </Typography>
+                                    </div>
+                                    {/* <Button onClick={logout}>Logout</Button> */}
+                                    <div className="flex justify-center items-center">
+                                        <p className="py-0 sm:py-24 text-20 " variant="h4"> Upload, Select, Click, Boom!!!  Mails Sent
+                                    <br></br>
+                                    We respect privacy. We do not collect any data.  </p>
+
+                                    </div>
+                                </FuseAnimateGroup>
+                            </div>
                         </div>
-                        </div>
-               
+
                     </div>
                 }
 
@@ -408,52 +408,51 @@ export default function NewLook(props) {
                     >
                         <div className='flex justify-center p-30'>
                             {/* <SheetUpload color="inherit" row={rows} emailBody={emailBody} columns={columns} subject={subject} body={body} list={list} setColumns={setColumns.bind(this)} setRows={setRows.bind(this)} /> */}
-                            <input id="fileInput" className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={()=>{setCnt(0)}}/>
+                            <input id="fileInput" className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={() => { setCnt(0) }} />
                             <label htmlFor="outlined-button-file">
                             </label>
-                    
+
                         </div>
                         <div>
-                        {rows != null && columns != null?<Button variant="outlined" color="inherit" component="span" className={classes.button+" send"}  onClick={() => {sendMail()}}>Send Email</Button>:null}
+                            {signedInUser!=null && isApiLoaded==true&& rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
 
-                        <ListItem>
-                                <ProgressBar color ='secondary' progress ={cnt} />
+                            <ListItem>
+                                <ProgressBar color='secondary' progress={cnt} />
                                 <div className='p-5'>
-                                    {cnt>=100 ?<DoneAllIcon color='secondary'></DoneAllIcon>:null}
+                                    {cnt >= 100 ? <DoneAllIcon color='secondary'></DoneAllIcon> : null}
                                 </div>
-                        </ListItem>
-                        {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{color:"Purple", justify:"center"}} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
-                        {rows != null && columns != null ? <Button color="primary" variant="outlined" style={{color:"Purple", justify:"center"}} onClick={resetHandle}>Reset</Button>: null}
-                        {previewOpen == true ? <Preview columns={list} body={body} subject={subject} setPreviewOpen={setPreviewOpen} ></Preview> : null}
-                        <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={()=>{setOpenTutorial(true)}} style={{color:"Purple", justify:"center"}} >Tutorial</Button>
-                        <Button variant="outlined" color="primary" component="span" onClick={()=>{setRun1(true)}} style={{color:"Purple", justify:"center"}} >Take Tour </Button>
-                        {openAbout == true ? <AboutUs setOpenAbout = {setOpenAbout} ></AboutUs> : null}
-                        {openTutorial == true ? <Tutorial  setOpenTutorial={setOpenTutorial}></Tutorial> : null}
+                            </ListItem>
+                            {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
+                            {rows != null && columns != null ? <Button color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
+                            {previewOpen == true ? <Preview columns={list} body={body} subject={subject} setPreviewOpen={setPreviewOpen} ></Preview> : null}
+                            <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "Purple", justify: "center" }} >Tutorial</Button>
+                            <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "Purple", justify: "center" }} >Take Tour </Button>
+                            {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
                         </div>
 
-                      
-        
-                        
+
+
+
                         {rows != null && columns != null ?
                             <Grid container lg={12} >
                                 <Divider />
                                 <Grid item lg={2}>
                                     <SideBarContent columns={columns} handleUpdate={handleUpdate}></SideBarContent>
                                 </Grid>
-                                <Grid container style={{marginTop:30}} lg={10}>
-                                    
-                                        <Grid  item lg ={4}>
+                                <Grid container style={{ marginTop: 30 }} lg={10}>
+
+                                    <Grid item lg={4}>
 
                                         <TextField
-                                        
+
                                             variant="outlined"
                                             label="Subject"
                                             className="subject"
                                             helperText="Please select Subject of Email"
                                             onChange={handleSubjectChange}
                                         ></TextField>
-                                        </Grid>
-                                        <Grid item lg ={7}>
+                                    </Grid>
+                                    <Grid item lg={7}>
                                         <TextField
                                             label="body"
                                             className="body"
@@ -464,17 +463,17 @@ export default function NewLook(props) {
                                             minRows={6}
                                             onChange={handleBodyChange}
                                         ></TextField>
-                                        </Grid>
+                                    </Grid>
 
-                                        
-                                        
-                                      <Grid item lg={11}>
 
-                                      <CourseList columns={columns} data={rows}  />
 
-                                      </Grid>
+                                    <Grid item lg={11}>
 
-                                    
+                                        <CourseList columns={columns} data={rows} />
+
+                                    </Grid>
+
+
                                 </Grid>
                             </Grid>
                             : null}
