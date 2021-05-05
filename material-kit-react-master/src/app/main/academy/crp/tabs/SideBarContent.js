@@ -54,7 +54,7 @@ export default function SideBarContent(props) {
         }}
         anchor="left"
       >
-        <List>
+        <List className="columnlist">
             
         <ListItem style ={{fontSize:"22px"}}>Select Columns</ListItem>
         <Divider  />

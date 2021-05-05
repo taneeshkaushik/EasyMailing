@@ -9,10 +9,13 @@ function FooterLayout1(props)
 
     return (
         <ThemeProvider theme={footerTheme}>
-            <AppBar id="fuse-footer" className="relative z-10" color="default">
+            <AppBar id="fuse-footer" className="relative z-10" style={{color:"#0e1e25"}}>
                 <Toolbar className="px-16 py-0 flex items-center">
-                    <Typography>
-                        Footer
+                    <Typography style={{color:"white"}}>
+                        IIT ROPAR
+                        <br></br>
+                        Created By: 
+                        Abhishek Kumar Gupta, Divyanshu Mathpal, Taneesh Kaushik in DEP Under Dr. Puneet Goyal
                     </Typography>
                 </Toolbar>
             </AppBar>

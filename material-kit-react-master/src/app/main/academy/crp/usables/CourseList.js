@@ -11,7 +11,6 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import "./table.css";
 const useStyles = makeStyles((theme) => ({
-
     table: {
         backgroundColor: "green"
     },
@@ -23,18 +22,18 @@ export default function CourseList(props) {
     const classes = useStyles();
     const cols = [
         {
-            Header: () => (
-                <Checkbox
-                    onClick={(event) => {
-                        event.stopPropagation();
-                    }}
-                    onChange={(event) => {
-                        // event.target.checked ? dispatch(Actions.selectAllContacts()) : dispatch(Actions.deSelectAllContacts());
-                    }}
-                // checked={selectedContactIds.length === Object.keys(contacts).length && selectedContactIds.length > 0}
-                // indeterminate={selectedContactIds.length !== Object.keys(contacts).length && selectedContactIds.length > 0}
-                />
-            ),
+            // Header: () => (
+            //     <Checkbox
+            //         onClick={(event) => {
+            //             event.stopPropagation();
+            //         }}
+            //         onChange={(event) => {
+            //             // event.target.checked ? dispatch(Actions.selectAllContacts()) : dispatch(Actions.deSelectAllContacts());
+            //         }}
+            //     // checked={selectedContactIds.length === Object.keys(contacts).length && selectedContactIds.length > 0}
+            //     // indeterminate={selectedContactIds.length !== Object.keys(contacts).length && selectedContactIds.length > 0}
+            //     />
+            // ),
             accessor: "",
             // Cell: row => {
             //     const ind=row.index;
@@ -102,9 +101,9 @@ export default function CourseList(props) {
 
                 <ReactTable
                     id="dataTable"
-                    className="-striped -highlight h-full sm:rounded-16 overflow-hidden "
+                    className="-striped -highlight h-full sm:rounded-16 overflow-hidden finaltable"
                     // className={classes.table}
-                    getTrProps={onRowClick}
+                    // getTrProps={onRowClick}
                         // return {
                         //     className: "cursor-pointer",
                         //     onClick  : (e, handleOriginal) => {

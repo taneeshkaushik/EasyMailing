@@ -23,9 +23,10 @@ const useStyles = makeStyles(theme => ({
 export default function SheetUpload(props) {
     const classes = useStyles();
     const [fileState, setFileState] = React.useState({});
-    const [signedInUser, setSignedInUser] = useState();
+    const [signedInUser, setSignedInUser] = useState(null);
     const [isLoadingGoogleMailApi, setIsLoadingGoogleMailApi] = useState(false);
     const [isApiLoaded, setIsApiLoaded] = useState(false);
+    const [logoutstatus,setLogout]=React.useState(false);
     const [cnt, setCnt] = useState(0);
     const onFileChange = (event) => {
 
@@ -42,38 +43,38 @@ export default function SheetUpload(props) {
             console.log(row_temp);
             var col_setup = [];
             var row_setup = [];
-            col_setup.push({
-                Header: () => (
-                                <Checkbox
+            // col_setup.push({
+            //     Header: () => (
+            //                     <Checkbox
                                     
                 
-                                    // onClick={(event) => {
-                                    // event.stopPropagation();
-                                    // }}
-                                    // checked={checkall}
-                                    // onChange={handleChangeAll}
+            //                         // onClick={(event) => {
+            //                         // event.stopPropagation();
+            //                         // }}
+            //                         // checked={checkall}
+            //                         // onChange={handleChangeAll}
                                 
-                                />
-                                ),
-                                accessor: "",
-                                Cell: row => {
-                                return (<Checkbox
+            //                     />
+            //                     ),
+            //                     accessor: "",
+            //                     Cell: row => {
+            //                     return (<Checkbox
                 
-                                    // name = {row.original.enrolmentId}
-                                    // checked={checklist[row.original.enrolmentId]}
-                                    // onChange = {handleChecked}
-                                    // onClick={(event) => {
-                                    // event.stopPropagation();
-                                    // }}
+            //                         // name = {row.original.enrolmentId}
+            //                         // checked={checklist[row.original.enrolmentId]}
+            //                         // onChange = {handleChecked}
+            //                         // onClick={(event) => {
+            //                         // event.stopPropagation();
+            //                         // }}
                
-                                />
-                                )
-                                },
-                                className: "justify-center",
-                                sortable: false,
-                                width: 64
-                            }
-                )
+            //                     />
+            //                     )
+            //                     },
+            //                     className: "justify-center",
+            //                     sortable: false,
+            //                     width: 64
+            //                 }
+            //     )
             for (var i = 0; i < row_temp[0].length; i++) {
                 col_setup.push({
                     Header: row_temp[0][i],
@@ -146,7 +147,7 @@ export default function SheetUpload(props) {
                 console.log(index);
                 var msg = 'To: ' + '<' + value.email + '>' + '\n';
                 msg += subject + props.body + '\n' ;
-                msg+='Content-Type: '+'text/html; charset=UTF-8\n';
+                // msg+='Content-Type: '+'text/html; charset=UTF-8\n';
                 msg+=props.emailBody+'\n';
                 for (var i in value) {
                     if (i == 'email' )
@@ -158,13 +159,12 @@ export default function SheetUpload(props) {
                     msg += value[i];
                     msg += '\n';
                 }
-                
                 sendMail(encode(msg));
             });
            
-        } else {
-            // prompt user to sign in
-            handleAuthClick();
+        }
+        else{
+                handleAuthClick();
         }
     };
 
@@ -177,13 +177,14 @@ export default function SheetUpload(props) {
             "raw": message
         }).then(function (response) {
             // alert("Email sent successfully");
-        setCnt((prevProgress) => (prevProgress >= 100 ? prevProgress : prevProgress +  (100 / props.row.length) ));
-
+        setCnt((prevProgress) => (prevProgress +  (100 / props.row.length) )>100?100:prevProgress +  (100 / props.row.length));
         })
             .catch((err) => {
                 console.log(err);
             });
-        setCnt((prevProgress) => (prevProgress >= 100 ? prevProgress : prevProgress +  (100 / props.row.length) ));
+        setCnt((prevProgress) => (prevProgress +  (100 / props.row.length) )>100?100:prevProgress +  (100 / props.row.length));
+            // const tempcnt=cnt;
+        // setCnt(tempcnt+(100/props.row.length))
     }
 
 
@@ -193,17 +194,22 @@ export default function SheetUpload(props) {
     const handleAuthClick = (event) => {
         gapi.auth2.getAuthInstance().signIn();
     };
+    // const logout=(event) => {
+    //     if (signedInUser!=null){
+    //         gapi.auth2.getAuthInstance().signOut().then(()=>{
+    //             alert('Signed Out Successfully');
+    //             setSignedInUser(null);
+    //             setLogout(true);
+    //         });
+    //     }
+    // }
     return (
         <div>
-            <input color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={()=>{setCnt(0)}}/>
+            <input className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={()=>{setCnt(0)}}/>
             <label htmlFor="outlined-button-file">
-    
             </label>
-            {/* {rows != null && columns != null ? <CourseList columns={columns} data={rows} /> : null} */}
-            <Button variant="outlined" color="inherit" component="span" className={classes.button} onClick={() => { handleClientLoad() }}>
-                Send Email
-            </Button>
-
+            {props.row != null && props.columns != null?<Button variant="outlined" color="inherit" component="span" className={classes.button+" send"}  onClick={() => {handleClientLoad()}}>Send Email</Button>:null}
+            {/* {signedInUser!=null?<Button variant="outlined" color="inherit" component="span" className={classes.button} onClick={logout}>Logout</Button>:null} */}
             <ListItem>
                 <ProgressBar color ='secondary' progress ={cnt} />
                 <div className='p-5'>
