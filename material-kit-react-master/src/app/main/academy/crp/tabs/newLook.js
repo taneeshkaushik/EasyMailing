@@ -34,7 +34,8 @@ import {
     Container,
     Checkbox,
     ListItem,
-    Dialog
+    Dialog,
+    Avatar,
 } from '@material-ui/core';
 import CourseList from '../usables/CourseList'
 import { makeStyles } from '@material-ui/styles';
@@ -427,8 +428,8 @@ export default function NewLook(props) {
                                     </div>
 
 
-                                    <div className="flex justify-center items-center">
-                                        <Typography variant="h3" style={{ color: 'green', paddingTop: 70 }}>ESMP</Typography>
+                                    <div className="flex justify-center items-center" style={{paddingTop:50}}>
+                                        <Avatar src="/static/images/logo.jpeg" style={{width:150, height:150}} />
                                     </div>
                                     {/* <Button onClick={logout}>Logout</Button> */}
                                     <div className="flex justify-center items-center">

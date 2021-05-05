@@ -84,7 +84,7 @@ export default function AboutUsPage()
                                         <br></br>
                                         <br></br>
                                         <div className="flex justify-center pb-32">
-                                            <Button href="https://www.linkedin.com/in/abhishek-kumar-gupta-9b7381176/" variant="contained" color="secondary" className="w-128">LinkedIn</Button>
+                                            <Button target="_blank" href="https://www.linkedin.com/in/abhishek-kumar-gupta-9b7381176/" variant="contained" color="secondary" className="w-128">LinkedIn</Button>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -116,7 +116,7 @@ export default function AboutUsPage()
                                         <br></br>
                                         <br></br>
                                         <div className="flex justify-center pb-32">
-                                            <Button href="https://www.linkedin.com/in/divyanshu-mathpal-5a029b17b/" variant="contained" color="secondary" className="w-128">LinkedIn</Button>
+                                            <Button target="_blank" href="https://www.linkedin.com/in/divyanshu-mathpal-5a029b17b/" variant="contained" color="secondary" className="w-128">LinkedIn</Button>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -150,7 +150,7 @@ export default function AboutUsPage()
                                         <br></br>
                                         <br></br>
                                         <div className="flex justify-center pb-32">
-                                            <Button href="https://www.linkedin.com/in/taneesh-kaushik-345766144/" variant="contained" color="secondary" className="w-128">LinkedIn</Button>
+                                            <Button target="_blank" href="https://www.linkedin.com/in/taneesh-kaushik-345766144/" variant="contained" color="secondary" className="w-128">LinkedIn</Button>
                                         </div>
                                     </div>
                                 </CardContent>
