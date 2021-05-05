@@ -454,13 +454,12 @@ export default function NewLook(props) {
 
                         {rows != null && columns != null ?
                             <Grid container lg={12} >
-                                <Divider />
-                                <Grid item lg={2}>
+                                <Grid container lg={3}>
                                     <SideBarContent columns={columns} handleUpdate={handleUpdate}></SideBarContent>
                                 </Grid>
-                                <Grid container style={{ marginTop: 30 }} lg={10}>
-
-                                    <Grid item lg={4}>
+                                <Grid container style={{ marginTop: 30 }} lg={9}>
+                            
+                                    <Grid container lg={4}>
 
                                         <TextField
                                             value={sub}
@@ -472,7 +471,7 @@ export default function NewLook(props) {
                                             onChange={handleSubjectChange}
                                         ></TextField>
                                     </Grid>
-                                    <Grid item lg={7}>
+                                    <Grid container lg={7}>
                                         <TextField
                                             label="body"
                                             className="body"
