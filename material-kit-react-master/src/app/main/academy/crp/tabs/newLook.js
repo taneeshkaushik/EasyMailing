@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Tutorial from './Tutorial';
-
+import LoginModal from './LoginModal';
 import AboutUs from './AboutUs';
 
 import {
@@ -60,6 +60,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function NewLook(props) {
 
+    const [isAuthenticated , setAuthentication] = useState(false);
     const classes = useStyles();
     const [fileState, setFileState] = React.useState({});
     const [signedInUser, setSignedInUser] = useState(null);
@@ -163,7 +164,7 @@ export default function NewLook(props) {
     }
     const [previewOpen, setPreviewOpen] = React.useState(false);
     const [openTutorial, setOpenTutorial] = React.useState(false);
-
+    const [openLogin , setOpenLoginModal] = React.useState(false);
 
     const onFileChange = (event) => {
 
@@ -422,8 +423,8 @@ export default function NewLook(props) {
                                 </Button>
                                         <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
                                         <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
-                                        {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login</Button>}
-
+                                        {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Use Personal for sending mail</Button>}
+                                        <Button variant="outlined" style={{ color: "white" }} onClick={() => { setOpenLoginModal(true) }} component="span">Use ESMP for sending mail</Button>
 
                                     </div>
 
@@ -471,6 +472,8 @@ export default function NewLook(props) {
                             {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
                             {openAbout == true ? <AboutUs setOpenAbout={setOpenAbout} ></AboutUs> : null}
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
+                            {openLogin == true ? <LoginModal setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
+                            
                         </div>
 
 
