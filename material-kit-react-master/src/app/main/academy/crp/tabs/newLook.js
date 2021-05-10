@@ -48,6 +48,7 @@ import { encode, decode } from 'js-base64';
 import ProgressBar from '../usables/ProgressBar';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -133,6 +134,62 @@ export default function NewLook(props) {
             disableBeacon: true,
         }
     ];
+
+    function sendEmailUsingESMP(){
+        
+        var subject = 'Subject: ' + sub + '\n\n';
+        // var ctype="Content-type: text/html;charset=iso-8859-1\n\n"
+        console.log(emailBody)
+        console.log(list);
+        var new_list = [...list]
+        console.log(new_list);
+        for (var i = 0; i < new_list.length; i++) {
+            new_list[i] = new_list[i].replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase();
+        }
+        console.log(new_list);
+        // console.log(list);
+        rows.map((value, index) => {
+            
+            var msg =  body + '\n';
+            // console.log(index);
+            // console.log(value);
+            // msg+='Content-Type: '+'text/html; charset=UTF-8\n';
+            // msg += emailBody + '\n';
+            for (var i in value) {
+                // console.log(i,value[i]);
+                console.log(i.toLowerCase());
+                if (i.toLowerCase() == 'email')
+                    continue;
+                if (new_list.indexOf(i) == -1)
+                    continue
+                var ind = new_list.indexOf(i);
+                msg += list[ind];
+                msg += ' :- ';
+                msg += value[i];
+                msg += '\n';
+            }
+           
+            // api call here 
+            axios.post('http://localhost:8081/api/sendMail' , 
+            {
+                'from': 'ezmailing982@gmail.com',
+                'to': value.email,
+                'subject': sub,
+                'text': msg,
+
+            }).then(function(response){
+
+                // console.log(response);
+
+                }).
+                catch(function(error){
+                console.log(error)
+                })
+      
+
+        });
+
+    }
 
     const [run1, setRun1] = React.useState(false);
     const handleSubjectChange = (event) => {
@@ -460,7 +517,7 @@ export default function NewLook(props) {
                         </div>
                         <div>
                             {signedInUser != null && isApiLoaded == true && rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
-
+                            {isAuthenticated == true ? <Button onClick = {sendEmailUsingESMP}>Send Email</Button> : null}
                             <ListItem>
                                 <ProgressBar color='secondary' progress={cnt} />
                                 <div className='p-5'>
@@ -472,7 +529,7 @@ export default function NewLook(props) {
                             {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
                             {openAbout == true ? <AboutUs setOpenAbout={setOpenAbout} ></AboutUs> : null}
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
-                            {openLogin == true ? <LoginModal setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
+                            {openLogin == true ? <LoginModal setAuthentication = {setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
                             
                         </div>
 

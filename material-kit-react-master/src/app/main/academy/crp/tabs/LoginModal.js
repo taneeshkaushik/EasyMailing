@@ -34,8 +34,18 @@ export default function LoginModal(props) {
   const [open, setOpen] = React.useState(true); 
   const [email , setEmail] = useState("");
   const [OTP, setOTP] = useState("");
+  const [emailOTP , setEmailOTP] = useState(null);
   const [error , setError] = useState("");
   function generateOTP() {
+    axios.post('http://localhost:8081/api/get-otp' , {'email' : email}).then(function(response){
+
+    // console.log(response);
+     setEmailOTP(response.data.otp);
+
+    }).
+    catch(function(error){
+      console.log(error)
+    })
       
 
   }
@@ -51,6 +61,17 @@ export default function LoginModal(props) {
     setEmail(e.target.value);
 
 
+  }
+
+  function verifyOTP(){
+    if(OTP === emailOTP )
+    {
+      props.setAuthentication(true);
+      alert("OTP IS CORRECT");
+    }
+    else{
+      alert("Incorrect OTP");
+    }
   }
 
   const handleClose = () => {
@@ -111,7 +132,7 @@ export default function LoginModal(props) {
         >
 
     </TextField>
-    <Button >
+    <Button onClick = {verifyOTP}>
         Verify
     </Button>
 

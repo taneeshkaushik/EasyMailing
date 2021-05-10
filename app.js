@@ -1,8 +1,9 @@
 const express = require("express");
+var cors = require('cors')
 var hash = require('object-hash');
 const nodemailer = require('nodemailer');
 const app = express();
-
+app.use(cors())
 app.use(
     express.urlencoded({
         extended: true
@@ -52,13 +53,15 @@ app.post("/api/get-otp", (req, res) => {
 app.post("/api/sendMail", (req, res) => {
     const mailOptions = {
         from: req.body.from,
-        to: req.body.email,
+        to: req.body.to,
         subject: req.body.subject,
         text: req.body.text,
     }
     transporter.sendMail(mailOptions, function (error, info) {
         if (error)
-            res.status(500).send({ 'error': 'Unable to send email' });
+            { console.log(error)
+            res.status(500).send({ 'error': error });
+            }
         else
             res.status(200).send({ 'otp': otp });
     });
