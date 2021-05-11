@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NewLook(props) {
-
+    const [emailId , setEmailID] = useState("")
     const [isAuthenticated , setAuthentication] = useState(false);
     const classes = useStyles();
     const [fileState, setFileState] = React.useState({});
@@ -137,7 +137,7 @@ export default function NewLook(props) {
 
     function sendEmailUsingESMP(){
         
-        var subject = 'Subject: ' + sub + '\n\n';
+       
         // var ctype="Content-type: text/html;charset=iso-8859-1\n\n"
         console.log(emailBody)
         console.log(list);
@@ -174,7 +174,7 @@ export default function NewLook(props) {
             {
                 'from': 'ezmailing982@gmail.com',
                 'to': value.email,
-                'subject': sub,
+                'subject': `${sub} (Sent from ${emailId})`,
                 'text': msg,
 
             }).then(function(response){
@@ -529,7 +529,7 @@ export default function NewLook(props) {
                             {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
                             {openAbout == true ? <AboutUs setOpenAbout={setOpenAbout} ></AboutUs> : null}
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
-                            {openLogin == true ? <LoginModal setAuthentication = {setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
+                            {openLogin == true ? <LoginModal setEmailID = {setEmailID} setAuthentication = {setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
                             
                         </div>
 
