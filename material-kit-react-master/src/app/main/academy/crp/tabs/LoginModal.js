@@ -150,10 +150,7 @@ export default function LoginModal(props) {
           variant="outlined"
           label="Enter OTP"
           className="otp"
-          inputProps={{
-              maxlength: 6
-            }}
-            errorText ={error}
+
           type="password"
           style={{marginLeft:20 , marginTop:30 , marginBottom:30 , marginRight: 20}}
           onChange={handleOTPChange}

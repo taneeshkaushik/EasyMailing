@@ -19,6 +19,11 @@ const template = `<p><img style="display: block; margin-left: auto; margin-right
 <h1 class="username" style="text-align: center;"><span style="color: #ff00ff;"><strong>&nbsp;{{email}}</strong></span></h1>
 <h1 style="text-align: center;"><span style="color: #ff00ff;"><strong>&nbsp;sent u below message.</strong></span></h1>
 <h3 style="text-align: center;"><span style="color: #000000;">&nbsp;{{text}}</span></h3>
+
+{{#each people}}
+  <h3 style="text-align: center;"><span style="color: #000000;">&nbsp;{{this}}</span></h3>
+{{/each}}
+
 <p style="text-align: center;"><span style="color: #808080;"><img style="border-radius: 50%;" src="https://drive.google.com/thumbnail?id=1HKVHblzXcLOfNFFPEI1YG1vc3F12chgu" alt="" width="76" height="77" /></span></p>
 <p style="text-align: center;"><span style="color: #808080;"><em>None of the information told is endorsed by our software, We don't have any role in the generation of this information.This is a system generated mail please don't reply to it, reply to the sender instead.</em></span></p>
 <p>&nbsp;</p>`;
@@ -39,8 +44,8 @@ app.get("/api/test", (req, res) => {
 app.post("/api/get-otp", (req, res) => {
     const otp = hash(Date.now(), { algorithm: 'md5' }).slice(0, 6);
     const key=gen.generate();
-    console.log(otp);
-    console.log(req.body);
+    //console.log(otp);
+    // console.log(req.body);
     if (req.body.email == undefined) {
         res.status(400).send({ 'error': 'Email field non existing in request' });
         return;
@@ -68,16 +73,17 @@ app.post("/api/get-otp", (req, res) => {
 });
 app.post("/api/sendMail", (req, res) => {
     var combined=handlebars.compile(template);
-    console.log(combined);
+    // console.log(combined);
     const mailOptions = {
         from: req.body.from,
         to: req.body.to,
         subject: req.body.subject,
-        html: combined({email:req.body.from,text:req.body.text}),
+        html: combined({email:req.body.from,text:req.body.text , people:req.body.table}),
     }
     transporter.sendMail(mailOptions, function (error, info) {
         if (error)
-            { console.log(error)
+            { 
+                // console.log(error)
             res.status(500).send({ 'error': error });
             }
         else
