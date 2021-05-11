@@ -14,6 +14,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import Tutorial from './Tutorial';
 import LoginModal from './LoginModal';
 import AboutUs from './AboutUs';
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css';
 
 import {
     Button,
@@ -70,13 +72,13 @@ export default function NewLook(props) {
     const [logoutStatus, setLogout] = React.useState(false);
     const [cnt, setCnt] = useState(0);
     const [openAbout, setOpenAbout] = React.useState(false);
-
     const [columns, setColumns] = React.useState(null);
     const [rows, setRows] = React.useState(null);
     const [sub, setSubject] = React.useState('');
     const [body, setBody] = React.useState('');
     const [list, setList] = React.useState([]);
     const [content, setContent] = React.useState(null)
+    const {quill, quillRef} = useQuill();
     const FIRST_TOUR = [
         {
             target: ".aboutus",
@@ -437,10 +439,22 @@ export default function NewLook(props) {
         // window.location.reload()
     }
     const ref = React.useRef();
+
+    React.useEffect(() => {
+        if (quill) {
+          quill.clipboard.dangerouslyPasteHTML('please enter body');
+        }
+      }, [quill]);
+
+      
+        
+      
+      
     return (
         <>
 
             <div className="demo-wrapper">
+
                 <JoyRide
                     callback={(data) => {
                         const { status, type } = data;
@@ -465,7 +479,7 @@ export default function NewLook(props) {
                 }}
                 header={
                     <div>
-
+                        
                         <div className="justify-center items-center">
                             {/* <AppBar className="flex flex-col justify-center flex-1"  > */}
 
@@ -508,6 +522,7 @@ export default function NewLook(props) {
                         }}
                         className="flex justify-center flex-wrap py-24"
                     >
+                        
                         <div className='flex justify-center p-30'>
                             {/* <SheetUpload color="inherit" row={rows} emailBody={emailBody} columns={columns} subject={subject} body={body} list={list} setColumns={setColumns.bind(this)} setRows={setRows.bind(this)} /> */}
                             <input id="fileInput" className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={() => {resetHandle();}} />
@@ -526,20 +541,15 @@ export default function NewLook(props) {
                             </ListItem>
                             {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
                             {rows != null && columns != null ? <Button className={"reset"} color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
-                            {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
+                            {previewOpen == true ? <Preview columns={list} body={quill.container.innerHTML} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
                             {openAbout == true ? <AboutUs setOpenAbout={setOpenAbout} ></AboutUs> : null}
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
                             {openLogin == true ? <LoginModal setAuthentication = {setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
-                            
+
                         </div>
-
-
-
-
-                        {rows != null && columns != null ?
                             <Grid container lg={12} >
                                 <Grid container lg={3}>
-                                    <SideBarContent columns={columns} handleUpdate={handleUpdate} ref={ref}></SideBarContent>
+                                   {rows != null && columns != null ? <SideBarContent columns={columns} handleUpdate={handleUpdate} ref={ref}></SideBarContent>:null}
                                 </Grid>
                                 <Grid container style={{ marginTop: 30 }} lg={9}>
 
@@ -551,41 +561,26 @@ export default function NewLook(props) {
                                             label="Subject"
                                             className="subject"
                                             helperText="Please select Subject of Email"
-
                                             onChange={handleSubjectChange}
                                         ></TextField>
                                     </Grid>
-                                    <Grid container lg={7}>
-                                        <TextField
-                                            label="body"
-                                            className="body"
-                                            helperText="Please Enter Opening Remarks of Email"
-                                            multiline
-                                            fullWidth
-                                            value={body}
-                                            variant="outlined"
-                                            minRows={6}
-                                            onChange={handleBodyChange}
-                                        ></TextField>
+                                    <Grid container lg={7} >
+                                        <div style={{ width: 500, height: 300, paddingBottom:50}}>
+                                            <div ref={quillRef} />
+                                        </div>
                                     </Grid>
-
-
-
-                                    <Grid item lg={11}>
-
-                                        <CourseList columns={columns} data={rows} />
-
-                                    </Grid>
-
-
+                                    {rows != null && columns != null?
+                                        <Grid item lg={11}>
+                                            <CourseList columns={columns} data={rows} />
+                                        </Grid>:null}
                                 </Grid>
                             </Grid>
-                            : null}
+                            
                     </FuseAnimateGroup>
-
                 }
 
             ></FusePageCarded>
+            
         </>
-    );
+    );                 
 }
