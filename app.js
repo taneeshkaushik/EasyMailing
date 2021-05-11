@@ -4,6 +4,9 @@ var hash = require('object-hash');
 var CryptoJS = require("crypto-js");
 const nodemailer = require('nodemailer');
 var gen = require("randomstring");
+const fs = require('fs')
+var handlebars = require('handlebars');
+const { compile } = require("handlebars");
 const app = express();
 app.use(cors())
 app.use(
@@ -12,6 +15,14 @@ app.use(
     })
 );
 app.use(express.json())
+const template = `<p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://drive.google.com/thumbnail?id=1CSqe5rPI_BBtw900EVbeSn5PiaE4sNzm" alt="" width="410" height="267" /></p>
+<h1 class="username" style="text-align: center;"><span style="color: #ff00ff;"><strong>&nbsp;{{email}}</strong></span></h1>
+<h1 style="text-align: center;"><span style="color: #ff00ff;"><strong>&nbsp;sent u below message.</strong></span></h1>
+<h3 style="text-align: center;"><span style="color: #000000;">&nbsp;{{text}}</span></h3>
+<p style="text-align: center;"><span style="color: #808080;"><img style="border-radius: 50%;" src="https://drive.google.com/thumbnail?id=1HKVHblzXcLOfNFFPEI1YG1vc3F12chgu" alt="" width="76" height="77" /></span></p>
+<p style="text-align: center;"><span style="color: #808080;"><em>None of the information told is endorsed by our software, We don't have any role in the generation of this information.This is a system generated mail please don't reply to it, reply to the sender instead.</em></span></p>
+<p>&nbsp;</p>`;
+// console.log(template)
 require('dotenv').config();
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -56,11 +67,13 @@ app.post("/api/get-otp", (req, res) => {
     });
 });
 app.post("/api/sendMail", (req, res) => {
+    var combined=handlebars.compile(template);
+    console.log(combined);
     const mailOptions = {
         from: req.body.from,
         to: req.body.to,
         subject: req.body.subject,
-        text: req.body.text,
+        html: combined({email:req.body.from,text:req.body.text}),
     }
     transporter.sendMail(mailOptions, function (error, info) {
         if (error)
