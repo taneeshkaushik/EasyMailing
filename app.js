@@ -1,14 +1,16 @@
 const express = require("express");
 var cors = require('cors')
 var hash = require('object-hash');
+var CryptoJS = require("crypto-js");
 const nodemailer = require('nodemailer');
+var gen = require("randomstring");
 const app = express();
 app.use(cors())
 app.use(
     express.urlencoded({
         extended: true
     })
-)
+);
 app.use(express.json())
 require('dotenv').config();
 const transporter = nodemailer.createTransport({
@@ -25,6 +27,7 @@ app.get("/api/test", (req, res) => {
 
 app.post("/api/get-otp", (req, res) => {
     const otp = hash(Date.now(), { algorithm: 'md5' }).slice(0, 6);
+    const key=gen.generate();
     console.log(otp);
     console.log(req.body);
     if (req.body.email == undefined) {
@@ -37,17 +40,19 @@ app.post("/api/get-otp", (req, res) => {
         res.status(401).send({ 'error': 'Unauthorized Email' });
         return;
     }
+    const combined=otp+key;
     const mailOptions = {
         from: process.env.EMAIL,
         to: email,
         subject: 'First Email using nodemailer',
-        text: `OTP value is ${otp}`
+        text: `One time secret passkey is ${combined}\n`
     };
+    const enc_otp=encrypt(otp,key);
     transporter.sendMail(mailOptions, function (error, info) {
         if (error)
             res.status(500).send({ 'error': 'Unable to send email' });
         else
-            res.status(200).send({ 'otp': otp });
+            res.status(200).send({ 'otp': enc_otp });
     });
 });
 app.post("/api/sendMail", (req, res) => {
@@ -63,12 +68,12 @@ app.post("/api/sendMail", (req, res) => {
             res.status(500).send({ 'error': error });
             }
         else
-            res.status(200).send({ 'otp': otp });
+            res.status(200).send({ 'error': false });
     });
 });
-async function sendEmail(mailOptions) {
-
-};
+function encrypt(otp,key){
+    return CryptoJS.AES.encrypt(JSON.stringify(otp), key).toString();
+}
 
 const PORT = process.env.PORT || 8080;
 
