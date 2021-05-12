@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path')
 var cors = require('cors')
 var hash = require('object-hash');
 var CryptoJS = require("crypto-js");
@@ -7,8 +8,13 @@ var gen = require("randomstring");
 const fs = require('fs')
 var handlebars = require('handlebars');
 const { compile } = require("handlebars");
+
+
 const app = express();
+
+
 app.use(cors())
+app.use(express.static(path.join(__dirname , 'build')))
 app.use(
     express.urlencoded({
         extended: true

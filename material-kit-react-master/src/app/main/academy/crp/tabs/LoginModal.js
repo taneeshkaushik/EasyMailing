@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles  } from '@material-ui/styles';
-import axios from 'axios';
+
 import AppBar from '@material-ui/core/AppBar';
 import {Toolbar , Dialog , TextField, Container , Button , Grid , CircularProgress} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,6 +12,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import AboutUsComponent from './AboutUsComponent';
 import { setDefaultSettings } from 'app/store/actions';
+import axiosInstance from 'app/main/axios';
 
 var CryptoJS = require("crypto-js");
 
@@ -55,7 +56,7 @@ export default function LoginModal(props) {
   function generateOTP() {
     setFlag(true);
     
-    axios.post('http://localhost:8081/api/get-otp' , {'email' : email}).then(function(response){
+    axiosInstance.post('/api/get-otp' , {'email' : email}).then(function(response){
 
     
     // console.log(response);

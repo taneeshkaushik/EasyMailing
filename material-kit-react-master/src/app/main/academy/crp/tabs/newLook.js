@@ -50,7 +50,7 @@ import { encode, decode } from 'js-base64';
 import ProgressBar from '../usables/ProgressBar';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import axios from "axios";
+import axiosInstance from "app/main/axios.js";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -173,7 +173,7 @@ export default function NewLook(props) {
 
            
             // api call here 
-            axios.post('http://localhost:8081/api/sendMail' , 
+            axiosInstance.post('/api/sendMail' , 
             {
                 'from': emailId,
                 'to': value.email,
