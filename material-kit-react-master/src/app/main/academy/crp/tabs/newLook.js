@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NewLook(props) {
-
+    const [emailId , setEmailID] = useState("")
     const [isAuthenticated , setAuthentication] = useState(false);
     const classes = useStyles();
     const [fileState, setFileState] = React.useState({});
@@ -139,27 +139,25 @@ export default function NewLook(props) {
 
     function sendEmailUsingESMP(){
         
-        var subject = 'Subject: ' + sub + '\n\n';
+       
         // var ctype="Content-type: text/html;charset=iso-8859-1\n\n"
-        console.log(emailBody)
-        console.log(list);
+        // //console.log(emailBody)
+        ////console.log(list);
         var new_list = [...list]
-        console.log(new_list);
+        ////console.log(new_list);
         for (var i = 0; i < new_list.length; i++) {
             new_list[i] = new_list[i].replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase();
         }
-        console.log(new_list);
-        // console.log(list);
+        ////console.log(new_list);
+        // ////console.log(list);
         rows.map((value, index) => {
-            
-            var msg =  body + '\n';
-            // console.log(index);
-            // console.log(value);
-            // msg+='Content-Type: '+'text/html; charset=UTF-8\n';
-            // msg += emailBody + '\n';
+            var rowlist = [];
+
+
             for (var i in value) {
-                // console.log(i,value[i]);
-                console.log(i.toLowerCase());
+                var msg = ' ';
+                // //console.log(i,value[i]);
+                //console.log(i.toLowerCase());
                 if (i.toLowerCase() == 'email')
                     continue;
                 if (new_list.indexOf(i) == -1)
@@ -168,24 +166,28 @@ export default function NewLook(props) {
                 msg += list[ind];
                 msg += ' :- ';
                 msg += value[i];
-                msg += '\n';
+
+                rowlist.push(msg);
+
             }
+
            
             // api call here 
             axios.post('http://localhost:8081/api/sendMail' , 
             {
-                'from': 'ezmailing982@gmail.com',
+                'from': emailId,
                 'to': value.email,
-                'subject': sub,
-                'text': msg,
+                'subject': `${sub}`,
+                'text': body,
+                'table':rowlist,
 
             }).then(function(response){
 
-                // console.log(response);
+                // //console.log(response);
 
                 }).
                 catch(function(error){
-                console.log(error)
+                //console.log(error)
                 })
       
 
@@ -207,7 +209,7 @@ export default function NewLook(props) {
 
     const handleUpdate = (event) => {
         if (event.target.checked == true) {
-            console.log(event.target.name);
+            //console.log(event.target.name);
             setList(() => [...list, event.target.name]);
         }
         else {
@@ -217,7 +219,7 @@ export default function NewLook(props) {
                     continue;
                 ls.push(list[i]);
             }
-            console.log(ls);
+            //console.log(ls);
             setList(ls);
         }
     }
@@ -230,13 +232,13 @@ export default function NewLook(props) {
         if (event.target.files[0] == undefined)
             return;
         setFileState({ selectedFile: event.target.files[0] });
-        console.log(event.target.result);
+        //console.log(event.target.result);
         const reader = new FileReader()
         reader.onload = async (event) => {
             const text = (event.target.result)
-            console.log(text.length);
+            //console.log(text.length);
             var row_temp = readString(text).data;
-            console.log(row_temp);
+            //console.log(row_temp);
             // var x = {};
             // for (var i =0 ;i< row_temp.length-1 ; i++)
             // {
@@ -290,7 +292,7 @@ export default function NewLook(props) {
                     isEmail = true;
             }
 
-            // console.log(col_setup);
+            // //console.log(col_setup);
             for (var i = 1; i < row_temp.length && row_temp[i].length > 1; i++) {
                 var temp = {};
                 for (var j = 0; j < row_temp[i].length; j++) {
@@ -298,7 +300,7 @@ export default function NewLook(props) {
                 }
                 row_setup.push(temp);
             }
-            console.log(row_setup);
+            //console.log(row_setup);
             if (isEmail) {
                 setColumns(col_setup);
                 setRows(row_setup);
@@ -335,7 +337,7 @@ export default function NewLook(props) {
                     // Listen for sign-in state changes.
                     setIsApiLoaded(true);
                     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-                    console.log('inside');
+                    //console.log('inside');
 
                     // Handle the initial sign-in state.
                     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
@@ -346,7 +348,7 @@ export default function NewLook(props) {
     const updateSigninStatus = (isSignedIn) => {
         if (isSignedIn) {
             // Set the signed in user
-            console.log(gapi.auth2.getAuthInstance().currentUser)
+            //console.log(gapi.auth2.getAuthInstance().currentUser)
             setSignedInUser(gapi.auth2.getAuthInstance().currentUser.le.wt);
             setIsLoadingGoogleMailApi(false);
             // list files if user is authenticated
@@ -361,25 +363,25 @@ export default function NewLook(props) {
     function sendMail() {
         var subject = 'Subject: ' + sub + '\n\n';
         // var ctype="Content-type: text/html;charset=iso-8859-1\n\n"
-        console.log(emailBody)
-        console.log(list);
+        //console.log(emailBody)
+        //console.log(list);
         var new_list = [...list]
-        console.log(new_list);
+        //console.log(new_list);
         for (var i = 0; i < new_list.length; i++) {
             new_list[i] = new_list[i].replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase();
         }
-        console.log(new_list);
-        // console.log(list);
+        //console.log(new_list);
+        // //console.log(list);
         rows.map((value, index) => {
             var to = 'To: ' + '<' + value.email + '>' + '\r\n';
             var msg = to + subject + body + '\n';
-            // console.log(index);
-            // console.log(value);
+            // //console.log(index);
+            // //console.log(value);
             // msg+='Content-Type: '+'text/html; charset=UTF-8\n';
             // msg += emailBody + '\n';
             for (var i in value) {
-                // console.log(i,value[i]);
-                console.log(i.toLowerCase());
+                // //console.log(i,value[i]);
+                //console.log(i.toLowerCase());
                 if (i.toLowerCase() == 'email')
                     continue;
                 if (new_list.indexOf(i) == -1)
@@ -399,7 +401,7 @@ export default function NewLook(props) {
                 setCnt((prevProgress) => (prevProgress + (100 / rows.length)) > 100 ? 100 : prevProgress + (100 / rows.length));
             })
                 .catch((err) => {
-                    console.log(err);
+                    //console.log(err);
                 });
 
         });
@@ -412,7 +414,7 @@ export default function NewLook(props) {
      *  Sign in the user upon button click.
      */
     const handleAuthClick = (event) => {
-        console.log('authclick');
+        //console.log('authclick');
         gapi.auth2.getAuthInstance().signIn();
     };
     const logout = (event) => {
@@ -426,7 +428,7 @@ export default function NewLook(props) {
         }
     }
     useEffect(() => {
-        console.log('useeffect');
+        //console.log('useeffect');
         if (isApiLoaded == true)
             handleAuthClick();
     }, [isApiLoaded])

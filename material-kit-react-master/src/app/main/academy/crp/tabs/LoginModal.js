@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles  } from '@material-ui/styles';
 import axios from 'axios';
 import AppBar from '@material-ui/core/AppBar';
-import {Toolbar , Dialog , TextField, Container , Button , Grid} from '@material-ui/core';
+import {Toolbar , Dialog , TextField, Container , Button , Grid , CircularProgress} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -11,6 +11,10 @@ import MailPreview from './MailPreview'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import AboutUsComponent from './AboutUsComponent';
+import { setDefaultSettings } from 'app/store/actions';
+
+var CryptoJS = require("crypto-js");
+
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -36,9 +40,24 @@ export default function LoginModal(props) {
   const [OTP, setOTP] = useState("");
   const [emailOTP , setEmailOTP] = useState(null);
   const [error , setError] = useState("");
+
+  function decrypt(ciphertext, secretKey){
+
+    // Decrypt
+    var bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
+    var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+    return decryptedData;
+
+  }
+  const [flag , setFlag] = useState(false);
+
   function generateOTP() {
+    setFlag(true);
+    
     axios.post('http://localhost:8081/api/get-otp' , {'email' : email}).then(function(response){
 
+    
     // console.log(response);
      setEmailOTP(response.data.otp);
 
@@ -64,18 +83,26 @@ export default function LoginModal(props) {
   }
 
   function verifyOTP(){
-    if(OTP === emailOTP )
+
+    // decrypt();
+    // if(OTP === emailOTP)
+    if(OTP.slice(0,6) === decrypt(emailOTP , OTP.slice(6)) )
     {
       props.setAuthentication(true);
+      props.setEmailID(email)
       alert("OTP IS CORRECT");
     }
     else{
       alert("Incorrect OTP");
     }
+    handleClose()
   }
 
   const handleClose = () => {
     props.setOpenLoginModal(false);
+    setEmail("");
+    setOTP("");
+    setEmailOTP(null);
   };
 
   return (
@@ -85,7 +112,7 @@ export default function LoginModal(props) {
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-              <ArrowBackIcon/> 
+              <CloseIcon/> 
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -105,36 +132,42 @@ export default function LoginModal(props) {
 
             </Grid>
         <Grid item lg = {3}>
-                <Button onClick={generateOTP} full style={{ marginLeft:20 , marginTop:30 , marginBottom:30 , marginRight: 20}} variant="outlined" color="inherit">
+                <Button onClick={generateOTP} full style={{ marginLeft:20 , marginTop:30 , marginBottom:30 }} variant="outlined" color="inherit">
                         Generate OTP
                 </Button>
         </Grid>
 
     
 
-        </Grid>
+        </Grid>    
        
+    {
+      emailOTP != null ? 
+      <div>
+     
+      <TextField
+          value={OTP}
+          variant="outlined"
+          label="Enter OTP"
+          className="otp"
 
+          type="password"
+          style={{marginLeft:20 , marginTop:30 , marginBottom:30 , marginRight: 20}}
+          onChange={handleOTPChange}
+          >
+  
+      </TextField>
+      <Button onClick = {verifyOTP}   style={{marginLeft:20 , marginTop:30 , marginBottom:30 , marginRight: 20}}>
+          Verify
+      </Button>
+  
+      </div>
+      
+      : flag == true ? <CircularProgress style = {{marginLeft: 100}}/> : null
+
+    }
    
 
-    <TextField
-        value={OTP}
-        variant="outlined"
-        label="Enter OTP"
-        className="otp"
-        inputProps={{
-            maxlength: 6
-          }}
-          errorText ={error}
-        type="password"
-        style={{marginLeft:20 , marginTop:30 , marginBottom:30 , marginRight: 20}}
-        onChange={handleOTPChange}
-        >
-
-    </TextField>
-    <Button onClick = {verifyOTP}>
-        Verify
-    </Button>
 
 
       </Dialog>
