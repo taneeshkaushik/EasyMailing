@@ -55,7 +55,7 @@ app.post("/api/get-otp", (req, res) => {
     const mailOptions = {
         from: process.env.EMAIL,
         to: email,
-        subject: 'First Email using nodemailer',
+        subject: 'ESMP Secret Key',
         text: `One time secret passkey is ${combined}\n`
     };
     const enc_otp=encrypt(otp,key);
@@ -68,7 +68,7 @@ app.post("/api/get-otp", (req, res) => {
 });
 app.post("/api/sendMail", (req, res) => {
 
-var template = `<h3 style="text-align: left;"><span style="color: #000000;">&nbsp;{{text}}</span></h3>`;
+var template = `<h3 style="text-align: left;"><span style="color: #000000;">{{text}}</span></h3>`;
 
 var template2 = `{{#each people}}
   <h3 style="text-align: left;"><span style="color: #000000;">&nbsp;{{this}}</span></h3>

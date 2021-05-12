@@ -552,7 +552,7 @@ export default function NewLook(props) {
                         <div>
                             {signedInUser != null && isApiLoaded == true && rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
                             { isAuthenticated == true ? 
-                            rows != null && columns != null  ? <Button color="inherit" onClick = {sendEmailUsingESMP}>Send Email</Button> :
+                            rows != null && columns != null  ? <Button style={{color:"green"}}  variant="outlined" onClick = {sendEmailUsingESMP}>Send Email</Button> :
                             <Typography style={{color:"green"}}>Load a csv to send email</Typography> 
 
                             : <Typography style={{color:"red"}}>Please login</Typography>}

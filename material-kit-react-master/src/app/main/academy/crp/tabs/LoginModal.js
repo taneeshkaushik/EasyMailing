@@ -124,8 +124,8 @@ export default function LoginModal(props) {
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon/> 
             </IconButton>
-            <Typography >
-            Enter your EMAIL for getting secret key for authentication
+            <Typography variant="h6" >
+            Enter your email to get secret key for authentication
           </Typography>
           </Toolbar>
 

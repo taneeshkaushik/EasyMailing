@@ -20,18 +20,18 @@ export default function MailPreview(props)
             <FuseAnimate animation="transition.slideUpIn" delay={200}>
                 <div>
 
-                    <div className="flex items-start justify-between">
+                    {/* <div className="flex items-start justify-between">
 
                         <div className="flex items-center justify-start">
                         <Avatar style={{color:'purple'}}>N</Avatar>
                             <Typography variant="h5">Your Name</Typography>
                         </div>
-                    </div>
-                    <Divider className="my-16"/>
+                    </div> */}
+                    {/* <Divider className="my-16"/> */}
     
                     <div contentEditable='true' dangerouslySetInnerHTML={{ __html: props.body }}></div>
                     {props.columns.map((column)=>(
-                        <Typography variant="h5">{column}:  value in sheet</Typography>
+                        <Typography >{column}:  value in sheet</Typography>
                     ))}
                     </div>
                 
