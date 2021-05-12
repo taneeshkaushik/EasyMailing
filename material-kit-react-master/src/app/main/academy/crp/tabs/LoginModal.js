@@ -20,6 +20,7 @@ var CryptoJS = require("crypto-js");
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
+    
   },
   title: {
     marginLeft: theme.spacing(2),
@@ -54,6 +55,13 @@ export default function LoginModal(props) {
   const [flag , setFlag] = useState(false);
 
   function generateOTP() {
+
+    if (email.slice(-12) != "iitrpr.ac.in" && email.slice(-10) != "iitj.ac.in") {
+
+      alert("You are not authorised !!!")
+      
+    }else{
+
     setFlag(true);
     
     axiosInstance.post('/api/get-otp' , {'email' : email}).then(function(response){
@@ -67,6 +75,7 @@ export default function LoginModal(props) {
       console.log(error)
     })
       
+  }
 
   }
   function handleOTPChange(e) {
@@ -109,16 +118,20 @@ export default function LoginModal(props) {
   return (
     <div>
 
-      <Dialog fullWidth open={open} onClose={handleClose} TransitionComponent={Transition}>
-        <AppBar className={classes.appBar}>
+      <Dialog fullWidth fullHeight open={open} onClose={handleClose} TransitionComponent={Transition}>
+        <AppBar  className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon/> 
             </IconButton>
+            <Typography >
+            Enter your EMAIL for getting secret key for authentication
+          </Typography>
           </Toolbar>
+
         </AppBar>
         {/* Put your code here */}
-     
+        
         <Grid container lg = {12} spacing={1}>
             <Grid  item lg ={9}>
             <TextField
@@ -127,14 +140,14 @@ export default function LoginModal(props) {
             variant="outlined"
             label="Enter Your Email"
             className="email"
-            style={{marginLeft:20 , marginTop:30 , marginBottom:30 , marginRight: 20}}
+            style={{marginLeft:20 , marginTop:30 , marginBottom:30 }}
             onChange={handleEmailChange}
         ></TextField>
 
             </Grid>
         <Grid item lg = {3}>
-                <Button onClick={generateOTP} full style={{ marginLeft:20 , marginTop:30 , marginBottom:30 }} variant="outlined" color="inherit">
-                        Generate OTP
+                <Button onClick={generateOTP}  style={{ marginLeft:20 , marginTop:30 , marginBottom:30 }} variant="outlined" color="inherit">
+                        Get Secret Key
                 </Button>
         </Grid>
 
@@ -144,25 +157,30 @@ export default function LoginModal(props) {
        
     {
       emailOTP != null ? 
-      <div>
-     
+      <Grid container lg = {12} spacing={1}>
+        <Typography style={{color:"green" , marginLeft:20}}>Please check your mail for secret key</Typography>
+      <Grid  item lg ={9}>
       <TextField
           value={OTP}
           variant="outlined"
-          label="Enter OTP"
+          label="Enter Secret Key"
           className="otp"
-
+          fullWidth
           type="password"
-          style={{marginLeft:20 , marginTop:30 , marginBottom:30 , marginRight: 20}}
+          style={{ marginLeft:20 , marginTop:30 , marginBottom:30}}
           onChange={handleOTPChange}
           >
   
       </TextField>
-      <Button onClick = {verifyOTP}   style={{marginLeft:20 , marginTop:30 , marginBottom:30 , marginRight: 20}}>
+
+      </Grid>
+        <Grid item lg = {3}>
+      <Button onClick = {verifyOTP}   style={{marginLeft:20 , marginTop:30 , marginBottom:30 }}>
           Verify
       </Button>
   
-      </div>
+      </Grid>
+      </Grid>
       
       : flag == true ? <CircularProgress style = {{marginLeft: 100}}/> : null
 

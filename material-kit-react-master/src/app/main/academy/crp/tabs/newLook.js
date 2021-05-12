@@ -178,13 +178,14 @@ export default function NewLook(props) {
             {
                 'from': emailId,
                 'to': value.email,
-                'subject': `${sub}`,
+                'subject': `${sub} (by ${emailId})`,
                 'text': body,
                 'table':rowlist,
 
             }).then(function(response){
 
                 // //console.log(response);
+                setCnt((prevProgress) => (prevProgress + (100 / rows.length)) > 100 ? 100 : prevProgress + (100 / rows.length));
 
                 }).
                 catch(function(error){
@@ -239,47 +240,10 @@ export default function NewLook(props) {
             const text = (event.target.result)
             //console.log(text.length);
             var row_temp = readString(text).data;
-            //console.log(row_temp);
-            // var x = {};
-            // for (var i =0 ;i< row_temp.length-1 ; i++)
-            // {
-            //     x[i]=true;
-            // }
-            // setCheckedState(x);
+
             var col_setup = [];
             var row_setup = [];
-            // col_setup.push({
-            //     Header: () => (
-            //                     <Checkbox
-
-            //                         ref = {ref}
-            //                         onClick={(event) => {
-            //                         event.stopPropagation();
-            //                         }}
-            //                         checked={checkall}
-            //                         onChange={handleChangeAll}
-
-            //                     />
-            //                     ),
-            //                     accessor: "",
-            //                     Cell: row => {
-            //                     return (<Checkbox
-
-            //                         name = {row.index}
-            //                         checked={checklist[row.index]}
-            //                         onChange = {handleChecked}
-            //                         onClick={(event) => {
-            //                         event.stopPropagation();
-            //                         }}
-
-            //                     />
-            //                     )
-            //                     },
-            //                     className: "justify-center",
-            //                     sortable: false,
-            //                     width: 64
-            //                 }
-            //     )
+ 
             var isEmail = false;
             for (var i = 0; i < row_temp[0].length; i++) {
                 col_setup.push({
@@ -440,6 +404,8 @@ export default function NewLook(props) {
         setRows(null);
         setColumns(null);
         setList([]);
+        setCnt(0);
+
         // window.location.reload()
     }
     const ref = React.useRef();
@@ -518,8 +484,8 @@ export default function NewLook(props) {
                                 </Button>
                                         <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
                                         <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
-                                        {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Use Personal for sending mail</Button>}
-                                        <Button variant="outlined" style={{ color: "white" }} onClick={() => { setOpenLoginModal(true) }} component="span">Use ESMP for sending mail</Button>
+                                        {/* {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Use Personal for sending mail</Button>} */}
+                                        {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={()=>{ setEmailID("");  setAuthentication(false)}}>Logout</Button>  : <Button variant="outlined" style={{ color: "white" }} onClick={() => { setOpenLoginModal(true); }} component="span">Login</Button> }
 
                                     </div>
 
@@ -556,7 +522,11 @@ export default function NewLook(props) {
                         </div>
                         <div>
                             {signedInUser != null && isApiLoaded == true && rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
-                            {isAuthenticated == true ? <Button onClick = {sendEmailUsingESMP}>Send Email</Button> : null}
+                            { isAuthenticated == true ? 
+                            rows != null && columns != null  ? <Button color="inherit" onClick = {sendEmailUsingESMP}>Send Email</Button> :
+                            <Typography style={{color:"green"}}>Load a csv to send email</Typography> 
+
+                            : <Typography style={{color:"red"}}>Please login</Typography>}
                             <ListItem>
                                 <ProgressBar color='secondary' progress={cnt} />
                                 <div className='p-5'>
@@ -565,10 +535,10 @@ export default function NewLook(props) {
                             </ListItem>
                             {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
                             {rows != null && columns != null ? <Button className={"reset"} color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
-                            {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
+                            {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} email = {emailId} ></Preview> : null}
                             {openAbout == true ? <AboutUs setOpenAbout={setOpenAbout} ></AboutUs> : null}
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
-                            {openLogin == true ? <LoginModal setAuthentication = {setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
+                            {openLogin == true ? <LoginModal setEmailID = {setEmailID} setAuthentication = {setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
 
                         </div>
                         {rows!=null && columns!=null?
@@ -590,7 +560,7 @@ export default function NewLook(props) {
                                 </Grid>
 
                                 <Grid container lg={9} justify='center'  >
-                                    <ReactQuill style={{width:800,  height:400, paddingBottom:75}} theme='snow' formats={formats} modules={modules} onChange={(value)=>{setBody(value);console.log(value)} } placeholder="enter the mail body" />
+                                    <ReactQuill style={{width:800,  height:200, paddingBottom:75}} theme='snow' formats={formats} modules={modules} onChange={(value)=>{setBody(value);console.log(value)} } placeholder="enter the mail body" />
                                 </Grid>
 
                                 <Grid item lg={11} justify='right'>

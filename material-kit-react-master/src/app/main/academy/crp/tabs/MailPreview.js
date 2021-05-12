@@ -11,7 +11,7 @@ export default function MailPreview(props)
         <div className="p-16 sm:p-24">
             <div className="flex items-center justify-between overflow-hidden">
                     <FuseAnimate delay={100}>
-                            {props.subject=='null' || props.subject=='undefined' || props.subject==''?<Typography variant="h3" className="flex">No Subject</Typography>:<Typography variant="h3" className="flex">{props.subject} from ({props.mail})</Typography>}
+                            {props.subject=='null' || props.subject=='undefined' || props.subject==''?<Typography variant="h3" className="flex">No Subject</Typography>:<Typography variant="h3" className="flex">{props.subject}  (by {props.email})</Typography>}
                     </FuseAnimate>
             </div>
 

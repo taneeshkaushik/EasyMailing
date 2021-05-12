@@ -21,18 +21,7 @@ app.use(
     })
 );
 app.use(express.json())
-const template = `<p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://drive.google.com/thumbnail?id=1CSqe5rPI_BBtw900EVbeSn5PiaE4sNzm" alt="" width="410" height="267" /></p>
-<h1 class="username" style="text-align: center;"><span style="color: #ff00ff;"><strong>&nbsp;{{email}}</strong></span></h1>
-<h1 style="text-align: center;"><span style="color: #ff00ff;"><strong>&nbsp;sent u below message.</strong></span></h1>
-<h3 style="text-align: center;"><span style="color: #000000;">&nbsp;{{text}}</span></h3>
 
-{{#each people}}
-  <h3 style="text-align: center;"><span style="color: #000000;">&nbsp;{{this}}</span></h3>
-{{/each}}
-
-<p style="text-align: center;"><span style="color: #808080;"><img style="border-radius: 50%;" src="https://drive.google.com/thumbnail?id=1HKVHblzXcLOfNFFPEI1YG1vc3F12chgu" alt="" width="76" height="77" /></span></p>
-<p style="text-align: center;"><span style="color: #808080;"><em>None of the information told is endorsed by our software, We don't have any role in the generation of this information.This is a system generated mail please don't reply to it, reply to the sender instead.</em></span></p>
-<p>&nbsp;</p>`;
 // console.log(template)
 require('dotenv').config();
 const transporter = nodemailer.createTransport({
@@ -58,7 +47,7 @@ app.post("/api/get-otp", (req, res) => {
     }
     // iitrpr.ac.in iitj.ac.in
     const email = String(req.body.email);
-    if (email.slice(-12) != "iitrpr.ac.in" && email.splice(-10) != "iitj.ac.in") {
+    if (email.slice(-12) != "iitrpr.ac.in" && email.slice(-10) != "iitj.ac.in") {
         res.status(401).send({ 'error': 'Unauthorized Email' });
         return;
     }
@@ -78,13 +67,25 @@ app.post("/api/get-otp", (req, res) => {
     });
 });
 app.post("/api/sendMail", (req, res) => {
-    var combined=handlebars.compile(template);
+
+var template = `<h3 style="text-align: left;"><span style="color: #000000;">&nbsp;{{text}}</span></h3>`;
+
+var template2 = `{{#each people}}
+  <h3 style="text-align: left;"><span style="color: #000000;">&nbsp;{{this}}</span></h3>
+{{/each}}
+
+<p style="text-align: center;"><span style="color: #808080;"><img href="" style="border-radius: 50%; padding-top: 100" src="https://drive.google.com/thumbnail?id=1HKVHblzXcLOfNFFPEI1YG1vc3F12chgu" alt="" width="76" height="77" /></span></p>
+<p style="text-align: center;"><span style="color: #808080;"><em>None of the information told is endorsed by our software, We don't have any role in the generation of this information.This is a system generated mail please don't reply to it, reply to the sender instead.</em></span></p>
+<p>&nbsp;</p>`;
+    const temp  = template.concat(req.body.text ,template2);
+    // console.log(temp)
+    var combined=handlebars.compile(temp);
     // console.log(combined);
     const mailOptions = {
         from: req.body.from,
         to: req.body.to,
-        subject: req.body.subject,
-        html: combined({email:req.body.from,text:req.body.text , people:req.body.table}),
+        subject:req.body.subject,
+        html: combined({email:req.body.from, people:req.body.table}),
     }
     transporter.sendMail(mailOptions, function (error, info) {
         if (error)
