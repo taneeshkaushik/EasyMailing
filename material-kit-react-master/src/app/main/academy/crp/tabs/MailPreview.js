@@ -6,16 +6,14 @@ import {FuseAnimate} from '@fuse';
 
 export default function MailPreview(props)
 {   
+    console.log(props.subject);
     return (
         <Container>
         <div className="p-16 sm:p-24">
             <div className="flex items-center justify-between overflow-hidden">
-
-                <div className="flex flex-col">
                     <FuseAnimate delay={100}>
-                        <Typography variant="h3" className="flex">Subject: {props.subject}</Typography>
+                            {props.subject=='null' || props.subject=='undefined' || props.subject==''?<Typography variant="h3" className="flex">No Subject</Typography>:<Typography variant="h3" className="flex">{props.subject} from ({props.mail})</Typography>}
                     </FuseAnimate>
-                </div>
             </div>
 
             <Divider className="my-16"/>
@@ -32,7 +30,7 @@ export default function MailPreview(props)
                     </div>
                     <Divider className="my-16"/>
                     <div class="content-center">
-                        <Typography variant="h5">{props.body}</Typography>
+                        <div contentEditable='true' dangerouslySetInnerHTML={{ __html: props.body }}></div>
                         {props.columns.map((column)=>(
                             <Typography variant="h5">{column}:  value in sheet</Typography>
                         ))}

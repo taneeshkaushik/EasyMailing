@@ -14,8 +14,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import Tutorial from './Tutorial';
 import LoginModal from './LoginModal';
 import AboutUs from './AboutUs';
-import { useQuill } from 'react-quilljs';
-import 'quill/dist/quill.snow.css';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import {
     Button,
@@ -75,10 +75,10 @@ export default function NewLook(props) {
     const [columns, setColumns] = React.useState(null);
     const [rows, setRows] = React.useState(null);
     const [sub, setSubject] = React.useState('');
-    const [body, setBody] = React.useState('');
+    const [body, setBody] = React.useState('please enter the body here');
     const [list, setList] = React.useState([]);
     const [content, setContent] = React.useState(null)
-    const {quill, quillRef} = useQuill();
+
     const FIRST_TOUR = [
         {
             target: ".aboutus",
@@ -409,6 +409,7 @@ export default function NewLook(props) {
         // setCnt(tempcnt+(100/rows.length))
     }
 
+    
 
     /**
      *  Sign in the user upon button click.
@@ -441,17 +442,47 @@ export default function NewLook(props) {
         // window.location.reload()
     }
     const ref = React.useRef();
-
-    React.useEffect(() => {
-        if (quill) {
-          quill.clipboard.dangerouslyPasteHTML('please enter body');
+    const formats = [
+        'header', 'font', 'size',
+        'bold', 'italic', 'underline', 'strike', 'blockquote','color',
+        'list', 'bullet', 'indent',
+        'link', 'image', 'video'
+      ]
+      var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote', 'code-block'],
+      
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+      
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+      
+        // ['clean']                                         // remove formatting button
+      ];
+      const modules = {
+        toolbar: [
+          [ { 'font': [] }],
+          [{size: []}],
+          ['bold', 'italic', 'underline', 'strike', 'blockquote'], 
+          [{'color': ["#000000", "#e60000", "#ff9900", "#ffff00", "#008a00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"]}],
+          [{'list': 'ordered'}, {'list': 'bullet'}, 
+           {'indent': '-1'}, {'indent': '+1'}],
+          ['link', 'image', 'video'],
+        //   ['clean']
+        ],
+        clipboard: {
+          // toggle to add extra line breaks when pasting HTML:
+          matchVisual: true,
         }
-      }, [quill]);
-
-      
-        
-      
-      
+      }
     return (
         <>
 
@@ -543,40 +574,39 @@ export default function NewLook(props) {
                             </ListItem>
                             {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
                             {rows != null && columns != null ? <Button className={"reset"} color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
-                            {previewOpen == true ? <Preview columns={list} body={quill.container.innerHTML} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
+                            {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} ></Preview> : null}
                             {openAbout == true ? <AboutUs setOpenAbout={setOpenAbout} ></AboutUs> : null}
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
                             {openLogin == true ? <LoginModal setAuthentication = {setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
 
                         </div>
-                            <Grid container lg={12} >
-                                <Grid container lg={3}>
-                                   {rows != null && columns != null ? <SideBarContent columns={columns} handleUpdate={handleUpdate} ref={ref}></SideBarContent>:null}
+                        {rows!=null && columns!=null?
+                        <Grid container lg={12} paddingTop="100" >
+                            <Grid container lg={2}>
+                                <SideBarContent columns={columns} handleUpdate={handleUpdate} ref={ref}></SideBarContent>
+                            </Grid>
+                            <Grid container style={{ marginTop: 30 }} lg={10}>
+
+                                <Grid container lg={3}  justify='center' >
+                                    <TextField
+                                        value={sub}
+                                        variant="outlined"
+                                        label="Subject"
+                                        className="subject"
+                                        helperText="Please select Subject of Email"
+                                        onChange={handleSubjectChange}
+                                    ></TextField>
                                 </Grid>
-                                <Grid container style={{ marginTop: 30 }} lg={9}>
 
-                                    <Grid container lg={4}>
+                                <Grid container lg={9} justify='center'  >
+                                    <ReactQuill style={{width:800,  height:400, paddingBottom:75}} theme="snow" formats={formats} modules={modules} bounds='.app'  onChange={(value)=>{setBody(value);console.log(value)} } placeholder="enter the mail body" />
+                                </Grid>
 
-                                        <TextField
-                                            value={sub}
-                                            variant="outlined"
-                                            label="Subject"
-                                            className="subject"
-                                            helperText="Please select Subject of Email"
-                                            onChange={handleSubjectChange}
-                                        ></TextField>
-                                    </Grid>
-                                    <Grid container lg={7} >
-                                        <div style={{ width: 500, height: 300, paddingBottom:50}}>
-                                            <div ref={quillRef} />
-                                        </div>
-                                    </Grid>
-                                    {rows != null && columns != null?
-                                        <Grid item lg={11}>
-                                            <CourseList columns={columns} data={rows} />
-                                        </Grid>:null}
+                                <Grid item lg={11} justify='right'>
+                                    <CourseList columns={columns} data={rows} />
                                 </Grid>
                             </Grid>
+                        </Grid>:null}
                             
                     </FuseAnimateGroup>
                 }
