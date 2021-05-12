@@ -513,8 +513,10 @@ export default function NewLook(props) {
                                 </Button>
                                         <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
                                         <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
-                                        {/* {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Use Personal for sending mail</Button>} */}
-                                        {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={()=>{ setEmailID("");  setAuthentication(false)}}>Logout</Button>  : <Button variant="outlined" style={{ color: "white" }} onClick={() => { setOpenLoginModal(true); }} component="span">Login</Button> }
+                                        {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={()=>{ setEmailID("");  setAuthentication(false)}}>Logout</Button>  : <Button variant="outlined" style={{ color: "white" }} onClick={() => { setOpenLoginModal(true); }} component="span">Authenticate your Email ID
+</Button> }
+
+                                        {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login to use your email id</Button>}
 
                                     </div>
 
@@ -555,7 +557,7 @@ export default function NewLook(props) {
                             rows != null && columns != null  ? <Button style={{color:"green"}}  variant="outlined" onClick = {sendEmailUsingESMP}>Send Email</Button> :
                             <Typography style={{color:"green"}}>Load a csv to send email</Typography> 
 
-                            : <Typography style={{color:"red"}}>Please login</Typography>}
+                            : <Typography style={{color:"red"}}>Please authenticate or login to send email</Typography>}
                             <ListItem>
                                 <ProgressBar color='secondary' progress={cnt} />
                                 <div className='p-5'>

@@ -125,7 +125,8 @@ export default function LoginModal(props) {
               <CloseIcon/> 
             </IconButton>
             <Typography variant="h6" >
-            Enter your email to get secret key for authentication
+
+            The emails would be sent from our email id , but kindly first enter your email id , get secret key and authenticate yourself.
           </Typography>
           </Toolbar>
 

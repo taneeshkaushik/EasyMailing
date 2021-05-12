@@ -40,32 +40,41 @@ export default function FullScreenDialog(props) {
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <ArrowBackIcon />
             </IconButton>
+            <Typography varint="h5">
+              Tutorial
+            </Typography>
           </Toolbar>
         </AppBar>
         {/* Put your code here */}
 
         <DialogContent>
         <Typography variant='h5' gutterBottom style={{paddingLeft:600}}>
-           <b>Follow these 4 steps and you are done.</b>
+           <b>Follow these 4 simple steps and you are done.</b>
+           <br></br> 
+           1. Either
+           <br></br>(a) authenticate yourself to send emails via our email-id<br></br> OR<br></br> (b) login using your email-id to send emails from your email-id. 
            <br></br>
-           1. Login using login button in top bar. 
+           2. Upload a csv file. Ensure first row is the header row and one column header is <strong>Email</strong>.
            <br></br>
-           2. Upload a non corrupt csv file. 
+           3. Select the columns that you want to include in the email message + mention the Subject and email body text. 
            <br></br>
-           3. Select the columns, put body and subject if you want. 
-           <br></br>
+
            4. Click on send button, boom mails sent. 
+           <br>
+           </br>
+           Note: We provide the feature to PREVIEW before sending the emails.<br></br> We recommend using authenticate option (a), as it provides rich text options and seems more robust.
+
           </Typography>
 
           <br></br>
           <br></br>
+          
           <Typography variant='h5' gutterBottom style={{paddingLeft:200 , paddingTop:50}}>
-            You can click on the take tour button for taking a tour of the website and understand the working.
-            Find below a detailed step wise guide. 
+          For detailed guidelines regarding ESMP usage, you may either refer to the screenshots below or click on the "Take Tour" button.
           </Typography>
           <Container style={{ paddingLeft: 200 }}>
 
-            <Typography variant='h5' gutterBottom style={{paddingLeft:150}}>
+            <Typography variant='h5' gutterBottom style={{paddingLeft:70}}>
               Step-1: Login using your <strong>college email ID</strong>, after that you will be asked for OTP authentication. 
            <br></br>
               <br></br>
