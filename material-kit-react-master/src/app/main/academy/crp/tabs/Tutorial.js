@@ -66,7 +66,7 @@ export default function FullScreenDialog(props) {
           <Container style={{ paddingLeft: 200 }}>
 
             <Typography variant='h5' gutterBottom style={{paddingLeft:150}}>
-              Step-1: Login using your <strong>college email ID</strong>.
+              Step-1: Login using your <strong>college email ID</strong>, after that you will be asked for OTP authentication. 
            <br></br>
               <br></br>
             </Typography>
