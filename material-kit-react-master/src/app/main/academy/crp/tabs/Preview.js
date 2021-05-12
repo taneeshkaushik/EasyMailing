@@ -37,7 +37,6 @@ export default function FullScreenDialog(props) {
 
   return (
     <div>
-      {console.log(props)}
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>

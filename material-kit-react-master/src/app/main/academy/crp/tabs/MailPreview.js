@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Avatar, Container, Divider, Icon, IconButton, Typography} from '@material-ui/core';
 import {FuseAnimate} from '@fuse';
-
-
+import 'react-quill/dist/quill.snow.css';
 
 export default function MailPreview(props)
 {   
-    console.log(props.subject);
+    console.log(props.body);
     return (
         <Container>
         <div className="p-16 sm:p-24">
@@ -29,13 +28,13 @@ export default function MailPreview(props)
                         </div>
                     </div>
                     <Divider className="my-16"/>
-                    <div class="content-center">
-                        <div contentEditable='true' dangerouslySetInnerHTML={{ __html: props.body }}></div>
-                        {props.columns.map((column)=>(
-                            <Typography variant="h5">{column}:  value in sheet</Typography>
-                        ))}
+    
+                    <div contentEditable='true' dangerouslySetInnerHTML={{ __html: props.body }}></div>
+                    {props.columns.map((column)=>(
+                        <Typography variant="h5">{column}:  value in sheet</Typography>
+                    ))}
                     </div>
-                </div>
+                
 
                 {/* <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://drive.google.com/thumbnail?id=1CSqe5rPI_BBtw900EVbeSn5PiaE4sNzm" alt="" width="410" height="267" /></p>
                 <h1 class="username" style="text-align: center;"><span style="color: #ff00ff;"><strong>&nbsp;{{email}}</strong></span></h1>
