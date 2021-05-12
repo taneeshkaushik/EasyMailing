@@ -413,18 +413,17 @@ export default function NewLook(props) {
         'header', 'font',
         'bold', 'italic', 'underline', 'strike','color',
         'list', 'bullet',
-        'link', 'image', 'video'
+         
       ]
       
       const modules = {
         toolbar: [
-            [{'header':[]}],
+         [{'header':[]}],
           [ { 'font': [] }],
           ['bold', 'italic', 'underline', 'strike'], 
           [{'color': ["#000000", "#e60000", "#ff9900", "#ffff00", "#008a00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"]}],
           [{'list': 'ordered'}, {'list': 'bullet'}],
-          ['link', 'image', 'video'],
-        //   ['clean']
+           ['clean']
         ],
         clipboard: {
           // toggle to add extra line breaks when pasting HTML:
@@ -435,14 +434,44 @@ export default function NewLook(props) {
       var SizeStyle = Quill.import('attributors/style/size');
       var FontStyle = Quill.import('attributors/style/font');
       var DirectionStyle=Quill.import('attributors/style/direction');
-      var alignStyle=Quill.import('attributors/style/align');
+      var AlignClass = Quill.import('attributors/class/align');
+      var AlignStyle = Quill.import('attributors/style/align');
+      var DirectionAttribute = Quill.import('attributors/attribute/direction');
+      Quill.register(DirectionAttribute, true);
+      Quill.register(AlignStyle, true);
+      Quill.register(AlignClass, true);
       Quill.register(SizeStyle,true);
       Quill.register(FontStyle, true);
       Quill.register(DirectionStyle, true);
-      Quill.register(alignStyle, true);
+      var DirectionAttribute = Quill.import('attributors/attribute/direction');
+    Quill.register(DirectionAttribute, true);
+    var AlignClass = Quill.import('attributors/class/align');
+    Quill.register(AlignClass, true);
+    var BackgroundClass = Quill.import('attributors/class/background');
+    Quill.register(BackgroundClass, true);
+    var ColorClass = Quill.import('attributors/class/color');
+    Quill.register(ColorClass, true);
+    var DirectionClass = Quill.import('attributors/class/direction');
+    Quill.register(DirectionClass, true);
+    var FontClass = Quill.import('attributors/class/font');
+    Quill.register(FontClass, true);
+    var SizeClass = Quill.import('attributors/class/size');
+    Quill.register(SizeClass, true);
+    var AlignStyle = Quill.import('attributors/style/align');
+    Quill.register(AlignStyle, true);
+    var BackgroundStyle = Quill.import('attributors/style/background');
+    Quill.register(BackgroundStyle, true);
+    var ColorStyle = Quill.import('attributors/style/color');
+    Quill.register(ColorStyle, true);
+    var DirectionStyle = Quill.import('attributors/style/direction');
+    Quill.register(DirectionStyle, true);
+    var FontStyle = Quill.import('attributors/style/font');
+    Quill.register(FontStyle, true);
+    var SizeStyle = Quill.import('attributors/style/size');
+    Quill.register(SizeStyle, true);
+      
     return (
         <>
-
             <div className="demo-wrapper">
 
                 <JoyRide
@@ -559,8 +588,8 @@ export default function NewLook(props) {
                                     ></TextField>
                                 </Grid>
 
-                                <Grid container lg={9} justify='center'  >
-                                    <ReactQuill style={{width:800,  height:200, paddingBottom:75}} theme='snow' formats={formats} modules={modules} onChange={(value)=>{setBody(value);console.log(value)} } placeholder="enter the mail body" />
+                                <Grid container lg={9} justify='center' className='body'  >
+                                    <ReactQuill style={{width:800,  height:400, paddingBottom:75}} theme='snow' formats={formats} modules={modules} onChange={(value)=>{setBody(value);} } placeholder="enter the mail body" />
                                 </Grid>
 
                                 <Grid item lg={11} justify='right'>

@@ -36,14 +36,8 @@ export default function AboutUsPage()
 
                         <FuseAnimate duration={400} delay={600}>
                             <Typography variant="h6" color="inherit" className="opacity-75 mt-16 mx-auto max-w-1000">
-                               This simple and sleek tool has been developed at IIT Ropar as one of the deliverables in the course of  Development Engineering, under our 
-                               very inspiring faculty <b>Dr. Puneet Goyal, Assistant Prof,CSE IIT Ropar</b>.
-                               <br></br>
-                               <br></br>
-                               The tool is just an attempt to make the life of academic community easy, a lot of things are done by academic community in excel sheets, 
-                               like putting the remarks of an assignment, sending the marks to students and what not, 
-                               as this data is different for each recipient, it takes a lot of work, to send these data to specific recipients,
-                               This is where we can use this simple application. 
+                            Post assessment, sending individually the marks/feedback/remarks/info to students in a time efficient manner is always a concern for the faculty members. Currently, there are not many easy-to-use supportive tools for this purpose and one has to spend quite a significant time to send marks, feedback or other info individually. Or one has to compromise privacy and share marks/feedback of all with all.
+                            <br></br>    <br></br>In order to serve and assist the academic community, here we provide a simple and sleek tool "ESMP" to quickly send individual emails with recipient-specific info/marks/feedback.  ESMP - Easy and Secure Mailing Portal not only empowers you to easily send individual emails but also is very secure and <strong>respects your privacy none of your activities or your data is known by us.</strong>
                             </Typography>
                         </FuseAnimate>
                     </div>
@@ -76,7 +70,7 @@ export default function AboutUsPage()
                                         </Typography>
                                         <br></br>
                                         <Typography variant="subtitle1" className="">
-                                            Pre Final Year
+                                            Batch of 2022
                                         </Typography>
                                         <Typography variant="subtitle1" className="">
                                             CSE, IIT Ropar
@@ -108,7 +102,7 @@ export default function AboutUsPage()
                                         </Typography>
                                         <br></br>
                                         <Typography variant="subtitle1" className="">
-                                            Pre Final Year
+                                            Batch of 2022
                                         </Typography>
                                         <Typography variant="subtitle1" className="">
                                             CSE, IIT Ropar
@@ -142,7 +136,7 @@ export default function AboutUsPage()
                                         </Typography>
                                         <br></br>
                                         <Typography variant="subtitle1" className="">
-                                            Pre Final Year
+                                            Batch of 2022
                                         </Typography>
                                         <Typography variant="subtitle1" className="">
                                             CSE, IIT Ropar
@@ -161,18 +155,55 @@ export default function AboutUsPage()
 
                     <div className="flex flex-col items-center py-96 text-center sm:text-left max-w-xl mx-auto">
 
-                        <Typography variant="h4" className="pb-40 font-light">Worried About Your Privacy? No worries,  It's all end to end.</Typography>
+                        <Typography variant="h4" className="pb-40 font-light">Some Other Applications</Typography>
 
-                        <div className="flex flex-wrap w-full">
-                                <Typography className="text-20 text-center mb-8">None of your activities or your data is known by us.</Typography>
-                                <Typography className="text-16" color="textSecondary">
-                                    This application is end to end service, there is no role of any database or backend which is storing 
-                                    your activities, neither any of your data is stored or kept anywhere, it all works in your browser, nothing is sent out of it. 
-                                    Google services are used to authenticate you, and then gmail is handling your data once this application makes request to it. 
-                                    So feel free to use our application, there is nothing to worry at all, it's all end to end between google and you. 
-                                </Typography>
+                            <div className="flex flex-wrap w-full">
+                                    <Typography className="text-20 text-center mb-8"> This tool can be used by an office staff to inform faculty members individually how many leaves or how much funds are pending. 
+                                    This tool can be used by a faculty or a program coordinator to inform the applicants individually about interview time and/or whether one is selected/rejected.</Typography>
+                                    {/* <Typography className="text-16" color="textSecondary">
+                                
+                                    </Typography> */}
+                            </div>
+                            <br></br>
+                            <br></br>
+                        <Typography style={{paddingTop:'200'}} variant="h4" className="pb-40 font-light">Privacy and Security</Typography>
+
+                            <div className="flex flex-wrap w-full">
+                                    <Typography className="text-20 text-center mb-8"> 
+                                        This application is fully secure service, there is no use of any database which is storing your activities, neither any of your data is stored or kept anywhere, we send you an OTP with our mail, and also send the information that you want to share with our email,
+                                        there is also authentication done with OTP, which is secured with a secret key. 
+                                        Feel free to use it, it's safe. 
+                                    </Typography>
+                                    {/* <Typography className="text-16" color="textSecondary">
+                                
+                                    </Typography> */}
+                            </div>
+                            <br></br>
+                            <br></br>
+                        <Typography style={{paddingTop:'100'}} variant="h4" className="pb-40 font-light">Credits</Typography>
+
+                            <div className="flex flex-wrap w-full">
+                                    <Typography className="text-20 text-center mb-8"> This tool is developed as part of the Development Engineering Project course (CP301) in the Department of Computer Science and Engineering at IIT Ropar.</Typography>
+                                    {/* <Typography className="text-16" color="textSecondary">
+                                
+                                    </Typography> */}
+                            </div>
+                        
+                            <div className="flex flex-wrap w-full">
+                                    <Typography className="text-20 text-center mb-8">Developers: Abhishek Kumar Gupta, Divyanshu Mathpal, Taneesh Kaushik B.Tech CSE 2018-2022, IIT Ropar.</Typography>
+                                    <Typography style={{paddingLeft:180}} className="text-20 text-center mb-8" variant="h6"><strong>Project Coordinator and Mentor: Dr. Puneet Goyal, IIT Ropar</strong></Typography>
+                            </div>
+            
+                            <br></br>
                             
-                        </div>
+                            <div className="flex flex-wrap w-full text-center">
+                                    <br></br>
+
+                                    <Typography className="text-20 text-center mb-8">For any feedback and comments, kindly contact: puneet@iitrpr.ac.in </Typography>
+                                    <Typography className="text-20 text-center mb-8">Disclaimer:We take no responsibility for the content sent by the user to the email recipients. </Typography>
+                            </div>
+                            
+                            
                     </div>
                 </div>
             </div>

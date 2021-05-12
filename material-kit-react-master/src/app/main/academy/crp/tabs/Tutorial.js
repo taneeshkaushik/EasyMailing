@@ -44,14 +44,29 @@ export default function FullScreenDialog(props) {
         </AppBar>
         {/* Put your code here */}
 
-        <DialogContent >
-          <Typography variant='h5' gutterBottom style={{paddingLeft:200}}>
+        <DialogContent>
+        <Typography variant='h5' gutterBottom style={{paddingLeft:600}}>
+           <b>Follow these 4 steps and you are done.</b>
+           <br></br>
+           1. Login using login button in top bar. 
+           <br></br>
+           2. Upload a non corrupt csv file. 
+           <br></br>
+           3. Select the columns, put body and subject if you want. 
+           <br></br>
+           4. Click on send button, boom mails sent. 
+          </Typography>
+
+          <br></br>
+          <br></br>
+          <Typography variant='h5' gutterBottom style={{paddingLeft:200 , paddingTop:50}}>
             You can click on the take tour button for taking a tour of the website and understand the working.
+            Find below a detailed step wise guide. 
           </Typography>
           <Container style={{ paddingLeft: 200 }}>
 
             <Typography variant='h5' gutterBottom style={{paddingLeft:150}}>
-              Step-1: Login using your <strong>college email ID</strong>.
+              Step-1: Login using your <strong>college email ID</strong>, after that you will be asked for OTP authentication. 
            <br></br>
               <br></br>
             </Typography>
