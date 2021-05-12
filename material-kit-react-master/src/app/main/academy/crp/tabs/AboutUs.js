@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
 export default function FullScreenDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
