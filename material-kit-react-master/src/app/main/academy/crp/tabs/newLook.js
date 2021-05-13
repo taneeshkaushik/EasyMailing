@@ -76,7 +76,7 @@ export default function NewLook(props) {
     const [columns, setColumns] = React.useState(null);
     const [rows, setRows] = React.useState(null);
     const [sub, setSubject] = React.useState('');
-    const [body, setBody] = React.useState('please enter the body here');
+    const [body, setBody] = React.useState('');
     const [list, setList] = React.useState([]);
     const [content, setContent] = React.useState(null)
 
@@ -230,6 +230,7 @@ export default function NewLook(props) {
     const [openLogin , setOpenLoginModal] = React.useState(false);
 
     const onFileChange = (event) => {
+
 
         if (event.target.files[0] == undefined)
             return;
@@ -408,6 +409,22 @@ export default function NewLook(props) {
 
         // window.location.reload()
     }
+
+
+    function fileLoadHandle(){
+
+        document.getElementById('fileInput').value = '';
+        setRows(null);
+        setColumns(null);
+        setList([]);
+        setCnt(0);
+
+
+        // if(signedInUser == null && isAuthenticated == false)
+        // {alert("Please Auth or ligin");
+        // return} 
+
+    }
     const ref = React.useRef();
     const formats = [
         'header', 'font',
@@ -545,16 +562,17 @@ export default function NewLook(props) {
                     >
                         
                         <div className='flex justify-center p-30'>
-                            {/* <SheetUpload color="inherit" row={rows} emailBody={emailBody} columns={columns} subject={subject} body={body} list={list} setColumns={setColumns.bind(this)} setRows={setRows.bind(this)} /> */}
-                            <input id="fileInput" className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={() => {resetHandle();}} />
+                            
+                            <input id="fileInput" className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={() => {fileLoadHandle();}} />
                             <label htmlFor="outlined-button-file">
                             </label>
 
                         </div>
+                        
                         <div>
                             {signedInUser != null && isApiLoaded == true && rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
                             { isAuthenticated == true ? 
-                            rows != null && columns != null  ? <Button style={{color:"green"}}  variant="outlined" onClick = {sendEmailUsingESMP}>Send Email</Button> :
+                                rows != null && columns != null  ? <Button style={{color:"green"}}  variant="outlined" onClick = {sendEmailUsingESMP}>Send Email</Button> :
                             <Typography style={{color:"green"}}>Load a csv to send email</Typography> 
 
                             : <Typography style={{color:"red"}}>Please authenticate or login to send email</Typography>}
@@ -591,7 +609,23 @@ export default function NewLook(props) {
                                 </Grid>
 
                                 <Grid container lg={9} justify='center' className='body'  >
+                                    {signedInUser != null ?  
+
+                                        <TextField
+                                        label="body"
+                                        className="body"
+                                        helperText="Please Enter Opening Remarks of Email"
+                                        multiline
+                                        fullWidth
+                                        value={body}
+                                        variant="outlined"
+                                        minRows={6}
+                                        onChange={handleBodyChange}
+                                        ></TextField>
+                                    
+                                    : 
                                     <ReactQuill style={{width:800,  height:400, paddingBottom:75}} theme='snow' formats={formats} modules={modules} onChange={(value)=>{setBody(value);} } placeholder="enter the mail body" />
+                                    }
                                 </Grid>
 
                                 <Grid item lg={11} justify='right'>
