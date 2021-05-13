@@ -92,6 +92,11 @@ export default function NewLook(props) {
             disableBeacon: true,
         },
         {
+            target: ".auth",
+            content: "Authenticate yourself to send mails using our email id.",
+            disableBeacon: true,
+        },
+        {
             target: ".login",
             content: "You can login from here using your gmail account.If the Send Email button is not visible after sheet upload then press here.",
             disableBeacon: true,
@@ -530,8 +535,7 @@ export default function NewLook(props) {
                                 </Button>
                                         <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
                                         <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
-                                        {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={()=>{ setEmailID("");  setAuthentication(false)}}>Logout</Button>  : <Button variant="outlined" style={{ color: "white" }} onClick={() => { setOpenLoginModal(true); }} component="span">Authenticate your Email ID
-</Button> }
+                                        {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span"  onClick={()=>{ setEmailID("");  setAuthentication(false)}}>Logout</Button>  : <Button variant="outlined" className="auth" style={{ color: "white" }} onClick={() => { setOpenLoginModal(true); }} component="span">Authenticate your Email ID</Button> }
 
                                         {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login to use your email id</Button>}
 

@@ -40,7 +40,7 @@ export default function FullScreenDialog(props) {
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <ArrowBackIcon />
             </IconButton>
-            <Typography varint="h5">
+            <Typography variant="h5">
               Tutorial
             </Typography>
           </Toolbar>
@@ -51,8 +51,8 @@ export default function FullScreenDialog(props) {
         <Typography variant='h5' gutterBottom style={{paddingLeft:600}}>
            <b>Follow these 4 simple steps and you are done.</b>
            <br></br> 
-           1. Either
-           <br></br>(a) authenticate yourself to send emails via our email-id<br></br> OR<br></br> (b) login using your email-id to send emails from your email-id. 
+            1. Either
+           <br></br>&nbsp;&nbsp;&nbsp;(a) authenticate yourself to send emails via our email-id<br></br> OR<br></br> &nbsp;&nbsp;&nbsp;(b) login using your email-id to send emails from your email-id. 
            <br></br>
            2. Upload a csv file. Ensure first row is the header row and one column header is <strong>Email</strong>.
            <br></br>
@@ -63,52 +63,55 @@ export default function FullScreenDialog(props) {
            <br>
            </br>
            Note: We provide the feature to PREVIEW before sending the emails.<br></br> We recommend using authenticate option (a), as it provides rich text options and seems more robust.
-
           </Typography>
 
           <br></br>
           <br></br>
           
           <Typography variant='h5' gutterBottom style={{paddingLeft:200 , paddingTop:50}}>
-          For detailed guidelines regarding ESMP usage, you may either refer to the screenshots below or click on the "Take Tour" button.
+              For detailed guidelines regarding ESMP usage, you may either refer to the screenshots below or click on the "Take Tour" button.
           </Typography>
+          <br></br>
+          <br></br>
           <Container style={{ paddingLeft: 200 }}>
 
-            <Typography variant='h5' gutterBottom style={{paddingLeft:70}}>
-              Step-1: Login using your <strong>college email ID</strong>, after that you will be asked for OTP authentication. 
+            <Typography variant='h5' gutterBottom style={{paddingLeft:0}}>
+              <strong>Step-1:</strong> Here you have 2 options: 
+              <br></br> &nbsp; (a)Authenticate your email id with secret key and then use our email id to send mails. 
+              <br></br> &nbsp; (b)Login using your email id,  emails will be sent with your mail id. 
            <br></br>
               <br></br>
             </Typography>
-            <img src={"static/images/1.png"} alt="" style={{ width: 750, height: 525 }} />
-            <Typography variant='h5' gutterBottom style={{paddingLeft:75}}>
+            <img src={"static/images/1.png"} alt="" style={{ width: 450, height: 525 }} />
+            <img src={"static/images/2.png"} alt="" style={{ width: 450, height: 525 }} />
+            <Typography variant='h5' gutterBottom style={{paddingLeft:0}}>
               <br></br>
               <br></br>
-           Step-2: Click on the upload file button to view the sheet.
+              <strong>Step-2:</strong> Click on the upload file button to upload the sheet.Ensure first row is the header row and one column header is Email.
            <br></br>
               <br></br>
             </Typography>
-            <img src={"static/images/3.jpeg"} alt="" style={{ width: 750, height: 525 }} />
-            <Typography variant='h5' gutterBottom style={{paddingLeft:70}}>
+            <img src={"static/images/3.png"} alt="" style={{ width: 750, height: 525 }} />
+            <Typography variant='h5' gutterBottom style={{paddingLeft:0}}>
               <br></br>
               <br></br>
-           Step-3: Set the Email subject and body of the email.
+              <strong>Step-3:</strong> Select the columns that you want to include in the email message + mention the Subject and email body text.
            <br></br>
               <br></br>
             </Typography>
-            <img src={"static/images/4.png"} alt="" style={{ width: 750, height: 525, paddingRight: 10 }} />
-            <img src={"static/images/5.png"} alt="" style={{ width: 750, height: 525 }} />
+            <img src={"static/images/4.png"} alt="" style={{ width: 900, height: 525, paddingRight: 10 }} />
             <Typography variant='h5' gutterBottom>
               <br></br>
               <br></br>
-           Step-4: Check all the boxes which you want to send in the email.
+              <strong>Step-4:</strong> You can preview the mail, and then after ensuring everything is correct click on the send email.Boom mails sent.  
            <br></br>
               <br></br>
             </Typography>
-            <img src={"static/images/6.png"} alt="" style={{ width: 750, height: 525 }} />
-            <Typography variant='h5' gutterBottom style={{paddingLeft:150}}>
+            <img src={"static/images/5.png"} alt="" style={{ width: 750, height: 525 }} />
+            {/* <Typography variant='h5' gutterBottom style={{paddingLeft:150}}>
               <br></br>
               <br></br>
-           Step-5: Click to preview the email.
+              Step-5: Click to preview the email.
            <br></br>
               <br></br>
             </Typography>
@@ -127,7 +130,7 @@ export default function FullScreenDialog(props) {
            </Typography>
             <br></br>
             <br></br>
-            <img src={"static/images/9.png"} alt="" style={{ width: 750, height: 525 }} />
+            <img src={"static/images/9.png"} alt="" style={{ width: 750, height: 525 }} /> */}
             <Typography variant='h3' style={{ color: "orange", justify: "center",paddingLeft:220 }} gutterBottom>
               <br></br>
               <br></br>
