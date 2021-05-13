@@ -72,11 +72,7 @@ var template = `<h3 style="text-align: left;"><span style="color: #000000;">{{te
 
 var template2 = `{{#each people}}
   <h3 style="text-align: left;"><span style="color: #000000;">&nbsp;{{this}}</span></h3>
-{{/each}}
-
-<p style="text-align: center;"><span style="color: #808080;"><img href="" style="border-radius: 50%; padding-top: 100" src="https://drive.google.com/thumbnail?id=1HKVHblzXcLOfNFFPEI1YG1vc3F12chgu" alt="" width="76" height="77" /></span></p>
-<p style="text-align: center;"><span style="color: #808080;"><em>None of the information told is endorsed by our software, We don't have any role in the generation of this information.This is a system generated mail please don't reply to it, reply to the sender instead.</em></span></p>
-<p>&nbsp;</p>`;
+{{/each}}`;
     const temp  = template.concat(req.body.text ,template2);
     // console.log(temp)
     var combined=handlebars.compile(temp);

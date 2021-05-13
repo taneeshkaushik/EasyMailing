@@ -293,6 +293,9 @@ export default function NewLook(props) {
     const [user, setUser] = useState();
     const handleClientLoad = () => {
         gapi.load('client:auth2', initClient);
+
+        setEmailID("");
+        setAuthentication(false);
     };
     const initClient = () => {
         setIsLoadingGoogleMailApi(true);
@@ -535,7 +538,7 @@ export default function NewLook(props) {
                                 </Button>
                                         <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
                                         <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
-                                        {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span"  onClick={()=>{ setEmailID("");  setAuthentication(false)}}>Logout</Button>  : <Button variant="outlined" className="auth" style={{ color: "white" }} onClick={() => { setOpenLoginModal(true); }} component="span">Authenticate your Email ID</Button> }
+                                        {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span"  onClick={()=>{ setEmailID("");  setAuthentication(false)}}>Logout</Button>  : <Button variant="outlined" className="auth" style={{ color: "white" }} onClick={() => { if(signedInUser != null) { logout(); setOpenLoginModal(true);} else {setOpenLoginModal(true);} }} component="span">Authenticate your Email ID</Button> }
 
                                         {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login to use your email id</Button>}
 
@@ -574,12 +577,11 @@ export default function NewLook(props) {
                         </div>
                         
                         <div>
-                            {signedInUser != null && isApiLoaded == true && rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
-                            { isAuthenticated == true ? 
-                                rows != null && columns != null  ? <Button style={{color:"green"}}  variant="outlined" onClick = {sendEmailUsingESMP}>Send Email</Button> :
-                            <Typography style={{color:"green"}}>Load a csv to send email</Typography> 
+                        { signedInUser != null || isAuthenticated != false ? rows != null && columns != null ? null : <Typography style={{color:"green"}}>Load a csv to send email</Typography>: <Typography style={{color:"red"}}>Please authenticate or login to send email</Typography>  }
 
-                            : <Typography style={{color:"red"}}>Please authenticate or login to send email</Typography>}
+                            {signedInUser != null && isApiLoaded == true && rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
+                            { isAuthenticated == true  && rows != null && columns != null  ? <Button style={{color:"green"}}  variant="outlined" onClick = {sendEmailUsingESMP}>Send Email</Button> : null}
+
                             <ListItem>
                                 <ProgressBar color='secondary' progress={cnt} />
                                 <div className='p-5'>
@@ -620,7 +622,7 @@ export default function NewLook(props) {
                                         className="body"
                                         helperText="Please Enter Opening Remarks of Email"
                                         multiline
-                                        fullWidth
+                                        style ={{width:600}}
                                         value={body}
                                         variant="outlined"
                                         minRows={6}
@@ -628,7 +630,7 @@ export default function NewLook(props) {
                                         ></TextField>
                                     
                                     : 
-                                    <ReactQuill style={{width:800,  height:400, paddingBottom:75}} theme='snow' formats={formats} modules={modules} onChange={(value)=>{setBody(value);} } placeholder="enter the mail body" />
+                                    <ReactQuill style={{width:800,  height:250, paddingBottom:75}} theme='snow' formats={formats} modules={modules} onChange={(value)=>{setBody(value);} } placeholder="enter the mail body" />
                                     }
                                 </Grid>
 

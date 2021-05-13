@@ -100,7 +100,7 @@ export default function LoginModal(props) {
     {
       props.setAuthentication(true);
       props.setEmailID(email)
-      alert("OTP IS CORRECT");
+      alert("Authentication Successful");
     }
     else{
       alert("Incorrect OTP");
@@ -124,8 +124,7 @@ export default function LoginModal(props) {
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon/> 
             </IconButton>
-            <Typography variant="h6" >
-
+            <Typography variant="h6" fullWidth >
             The emails would be sent from our email id , but kindly first enter your email id , get secret key and authenticate yourself.
           </Typography>
           </Toolbar>

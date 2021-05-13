@@ -68,7 +68,7 @@ export default function FullScreenDialog(props) {
           <br></br>
           <br></br>
           
-          <Typography variant='h5' gutterBottom style={{paddingLeft:200 , paddingTop:50}}>
+          <Typography variant='h5' gutterBottom style={{paddingLeft:400 , paddingTop:50}}>
               For detailed guidelines regarding ESMP usage, you may either refer to the screenshots below or click on the "Take Tour" button.
           </Typography>
           <br></br>
