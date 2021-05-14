@@ -144,7 +144,7 @@ export default function NewLook(props) {
 
     function sendEmailUsingESMP() {
 
-
+        setCnt(0);
         // var ctype="Content-type: text/html;charset=iso-8859-1\n\n"
         // //console.log(emailBody)
         ////console.log(list);
@@ -411,6 +411,8 @@ export default function NewLook(props) {
     function resetHandle() {
         document.getElementById('fileInput').value = '';
         setRows(null);
+        setSubject("");
+        setBody("");
         setColumns(null);
         setList([]);
         setCnt(0);
