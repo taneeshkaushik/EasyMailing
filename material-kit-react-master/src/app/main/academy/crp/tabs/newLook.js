@@ -62,8 +62,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NewLook(props) {
-    const [emailId , setEmailID] = useState("")
-    const [isAuthenticated , setAuthentication] = useState(false);
+    const [emailId, setEmailID] = useState("")
+    const [isAuthenticated, setAuthentication] = useState(false);
     const classes = useStyles();
     const [fileState, setFileState] = React.useState({});
     const [signedInUser, setSignedInUser] = useState(null);
@@ -142,13 +142,13 @@ export default function NewLook(props) {
         }
     ];
 
-    function sendEmailUsingESMP(){
-        
-       
+    function sendEmailUsingESMP() {
+
+
         // var ctype="Content-type: text/html;charset=iso-8859-1\n\n"
         // //console.log(emailBody)
         ////console.log(list);
-        var new_list = [...list]
+        var new_list = [...list];
         ////console.log(new_list);
         for (var i = 0; i < new_list.length; i++) {
             new_list[i] = new_list[i].replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase();
@@ -157,8 +157,6 @@ export default function NewLook(props) {
         // ////console.log(list);
         rows.map((value, index) => {
             var rowlist = [];
-
-
             for (var i in value) {
                 var msg = ' ';
                 // //console.log(i,value[i]);
@@ -176,26 +174,26 @@ export default function NewLook(props) {
 
             }
 
-           
+
             // api call here 
-            axiosInstance.post('/api/sendMail' , 
-            {
-                'from': emailId,
-                'to': value.email,
-                'subject': `${sub} (by ${emailId})`,
-                'text': body,
-                'table':rowlist,
+            axiosInstance.post('/api/sendMail',
+                {
+                    'from': emailId,
+                    'to': value.email,
+                    'subject': `${sub} (by ${emailId})`,
+                    'text': body,
+                    'table': rowlist,
 
-            }).then(function(response){
+                }).then(function (response) {
 
-                // //console.log(response);
-                setCnt((prevProgress) => (prevProgress + (100 / rows.length)) > 100 ? 100 : prevProgress + (100 / rows.length));
+                    // //console.log(response);
+                    setCnt((prevProgress) => (prevProgress + (100 / rows.length)) > 100 ? 100 : prevProgress + (100 / rows.length));
 
                 }).
-                catch(function(error){
-                //console.log(error)
+                catch(function (error) {
+                    //console.log(error)
                 })
-      
+
 
         });
 
@@ -231,8 +229,8 @@ export default function NewLook(props) {
     }
     const [previewOpen, setPreviewOpen] = React.useState(false);
     const [openTutorial, setOpenTutorial] = React.useState(false);
-    const [openLogin , setOpenLoginModal] = React.useState(false);
-
+    const [openLogin, setOpenLoginModal] = React.useState(false);
+    const [loggedOut, setLoggedOut] = React.useState(false);
     const onFileChange = (event) => {
 
 
@@ -248,7 +246,7 @@ export default function NewLook(props) {
 
             var col_setup = [];
             var row_setup = [];
- 
+
             var isEmail = false;
             for (var i = 0; i < row_temp[0].length; i++) {
                 col_setup.push({
@@ -291,12 +289,15 @@ export default function NewLook(props) {
     var SCOPES = 'https://mail.google.com/';
     const [user, setUser] = useState();
     const handleClientLoad = () => {
-        
+
         gapi.load('client:auth2', initClient);
 
         setEmailID("");
         setAuthentication(false);
     };
+    useEffect(() => {
+        handleClientLoad();
+    }, [props])
     const initClient = () => {
         setIsLoadingGoogleMailApi(true);
         gapi.client
@@ -309,27 +310,29 @@ export default function NewLook(props) {
             .then(
                 function () {
                     // Listen for sign-in state changes.
+                    console.log('init done');
                     setIsApiLoaded(true);
                     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
                     //console.log('inside');
-
                     // Handle the initial sign-in state.
                     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-                },
-                function (error) { }
-            );
+                }
+            ).catch((error) => {
+                console.log(error);
+            })
     };
     const updateSigninStatus = (isSignedIn) => {
         if (isSignedIn) {
             // Set the signed in user
             //console.log(gapi.auth2.getAuthInstance().currentUser)
+            console.log('signed in');
             setSignedInUser(gapi.auth2.getAuthInstance().currentUser.le.wt);
             setIsLoadingGoogleMailApi(false);
             // list files if user is authenticated
         }
-        // else {
-        // handleAuthClick();
-        // }
+        else {
+            console.log('not signed in')
+        }
     };
     /**
     * List files.
@@ -383,30 +386,27 @@ export default function NewLook(props) {
         // setCnt(tempcnt+(100/rows.length))
     }
 
-    
+
 
     /**
      *  Sign in the user upon button click.
      */
     const handleAuthClick = (event) => {
         //console.log('authclick');
-        gapi.auth2.getAuthInstance().signIn();
+        if (signedInUser == null && isApiLoaded)
+            gapi.auth2.getAuthInstance().signIn();
     };
     const logout = (event) => {
-        if (gapi.auth2.getAuthInstance().currentUser) {
-            gapi.auth2.getAuthInstance().signOut().then(() => {
-                alert('Signed Out Successfully');
-                setSignedInUser(null);
-                setIsApiLoaded(false);
-                setLogout(true);
-            });
-        }
+        gapi.auth2.getAuthInstance().signOut().then(() => {
+            alert('Signed Out Successfully');
+            setSignedInUser(null);
+        });
     }
-    useEffect(() => {
-        //console.log('useeffect');
-        if (isApiLoaded == true)
-            handleAuthClick();
-    }, [isApiLoaded])
+    // useEffect(() => {
+    //     //console.log('useeffect');
+    //     if (signedInUser == null && isApiLoaded)
+    //         handleAuthClick();
+    // }, [signedInUser])
 
     function resetHandle() {
         document.getElementById('fileInput').value = '';
@@ -419,7 +419,7 @@ export default function NewLook(props) {
     }
 
 
-    function fileLoadHandle(){
+    function fileLoadHandle() {
 
         document.getElementById('fileInput').value = '';
         setRows(null);
@@ -434,27 +434,7 @@ export default function NewLook(props) {
 
     }
     const ref = React.useRef();
-    const formats = [
-        'header', 'font',
-        'bold', 'italic', 'underline', 'strike','color',
-        'list', 'bullet',
-         
-      ]
-      
-      const modules = {
-        toolbar: [
-         [{'header':[]}],
-          [ { 'font': [] }],
-          ['bold', 'italic', 'underline', 'strike'], 
-          [{'color': ["#000000", "#e60000", "#ff9900", "#ffff00", "#008a00", "#0066cc", "#9933ff", "#ffffff", "#facccc", "#ffebcc", "#ffffcc", "#cce8cc", "#cce0f5", "#ebd6ff", "#bbbbbb", "#f06666", "#ffc266", "#ffff66", "#66b966", "#66a3e0", "#c285ff", "#888888", "#a10000", "#b26b00", "#b2b200", "#006100", "#0047b2", "#6b24b2", "#444444", "#5c0000", "#663d00", "#666600", "#003700", "#002966", "#3d1466"]}],
-          [{'list': 'ordered'}, {'list': 'bullet'}],
-           ['clean']
-        ],
-        clipboard: {
-          // toggle to add extra line breaks when pasting HTML:
-          matchVisual: true,
-        }
-      }
+    
 
     return (
         <>
@@ -484,7 +464,7 @@ export default function NewLook(props) {
                 }}
                 header={
                     <div>
-                        
+
                         <div className="justify-center items-center">
                             {/* <AppBar className="flex flex-col justify-center flex-1"  > */}
 
@@ -499,15 +479,15 @@ export default function NewLook(props) {
                                 </Button>
                                         <Button className="tutorial" variant="outlined" color="primary" component="span" onClick={() => { setOpenTutorial(true) }} style={{ color: "white", justify: "center" }} >Tutorial</Button>
                                         <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
-                                        {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span"  onClick={()=>{ setEmailID("");  setAuthentication(false)}}>Logout</Button>  : <Button variant="outlined" className="auth" style={{ color: "white" }} onClick={() => { if(signedInUser != null) { logout(); setOpenLoginModal(true);} else {setOpenLoginModal(true);} }} component="span">Authenticate your Email ID</Button> }
+                                        {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span" onClick={() => { setEmailID(""); setAuthentication(false) }}>Logout</Button> : <Button variant="outlined" className="auth" style={{ color: "white" }} onClick={() => { if (signedInUser != null) { logout(); setOpenLoginModal(true); } else { setOpenLoginModal(true); } }} component="span">Authenticate your Email ID</Button>}
 
-                                        {signedInUser != null && isApiLoaded==true ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login to use your email id</Button>}
+                                        {signedInUser != null && isApiLoaded == true ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleAuthClick}>Login to use your email id</Button>}
 
                                     </div>
 
 
-                                    <div className="flex justify-center items-center" style={{paddingTop:50}}>
-                                        <Avatar src="/static/images/logo.jpeg" style={{width:150, height:150}} />
+                                    <div className="flex justify-center items-center" style={{ paddingTop: 50 }}>
+                                        <Avatar src="/static/images/logo.jpeg" style={{ width: 150, height: 150 }} />
                                     </div>
                                     {/* <Button onClick={logout}>Logout</Button> */}
                                     <div className="flex justify-center items-center">
@@ -528,20 +508,20 @@ export default function NewLook(props) {
                         }}
                         className="flex justify-center flex-wrap py-24"
                     >
-                        
+
                         <div className='flex justify-center p-30'>
-                            
-                            <input id="fileInput" className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={() => {fileLoadHandle();}} />
+
+                            <input id="fileInput" className="takeinput" color="inherit" type="file" accept='.csv' onChange={onFileChange} onClick={() => { fileLoadHandle(); }} />
                             <label htmlFor="outlined-button-file">
                             </label>
 
                         </div>
-                        
+
                         <div>
-                        { signedInUser != null || isAuthenticated != false ? rows != null && columns != null ? null : <Typography style={{color:"green"}}>Load a csv to send email</Typography>: <Typography style={{color:"red"}}>Please authenticate or login to send email</Typography>  }
+                            {signedInUser != null || isAuthenticated != false ? rows != null && columns != null ? null : <Typography style={{ color: "green" }}>Load a csv to send email</Typography> : <Typography style={{ color: "red" }}>Please authenticate or login to send email</Typography>}
 
                             {signedInUser != null && isApiLoaded == true && rows != null && columns != null ? <Button variant="outlined" color="inherit" component="span" className={classes.button + " send"} onClick={() => { sendMail() }}>Send Email</Button> : null}
-                            { isAuthenticated == true  && rows != null && columns != null  ? <Button style={{color:"green"}}  variant="outlined" onClick = {sendEmailUsingESMP}>Send Email</Button> : null}
+                            {isAuthenticated == true && rows != null && columns != null ? <Button style={{ color: "green" }} variant="outlined" onClick={sendEmailUsingESMP}>Send Email</Button> : null}
 
                             <ListItem>
                                 <ProgressBar color='secondary' progress={cnt} />
@@ -551,78 +531,79 @@ export default function NewLook(props) {
                             </ListItem>
                             {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
                             {rows != null && columns != null ? <Button className={"reset"} color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
-                            {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} email = {emailId} ></Preview> : null}
+                            {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} email={emailId} ></Preview> : null}
                             {openAbout == true ? <AboutUs setOpenAbout={setOpenAbout} ></AboutUs> : null}
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
-                            {openLogin == true ? <LoginModal setEmailID = {setEmailID} setAuthentication = {setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
+                            {openLogin == true ? <LoginModal setEmailID={setEmailID} setAuthentication={setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
 
                         </div>
-                        {rows!=null && columns!=null?
-                        <Grid container lg={12} paddingTop="100" >
-                            <Grid container lg={2}>
-                                <SideBarContent columns={columns} handleUpdate={handleUpdate} ref={ref}></SideBarContent>
-                            </Grid>
-                            <Grid container style={{ marginTop: 30 }} lg={10}>
-
-                                <Grid container lg={3}  justify='center' >
-                                    <TextField
-                                        value={sub}
-                                        variant="outlined"
-                                        label="Subject"
-                                        className="subject"
-                                        helperText="Please select Subject of Email"
-                                        onChange={handleSubjectChange}
-                                    ></TextField>
+                        {rows != null && columns != null ?
+                            <Grid container lg={12} paddingTop="100" >
+                                <Grid container lg={2}>
+                                    <SideBarContent columns={columns} handleUpdate={handleUpdate} ref={ref}></SideBarContent>
                                 </Grid>
+                                <Grid container style={{ marginTop: 30 }} lg={10}>
 
-                                <Grid container lg={9} justify='center' className='body'  >
-                                    {signedInUser != null ?  
-                                    
+                                    <Grid container lg={3} justify='center' >
                                         <TextField
-                                        label="body"
-                                        className="body"
-                                        helperText="Please Enter Opening Remarks of Email"
-                                        multiline
-                                        style ={{width:600}}
-                                        value={body}
-                                        variant="outlined"
-                                        minRows={6}
-                                        onChange={handleBodyChange}
+                                            value={sub}
+                                            variant="outlined"
+                                            label="Subject"
+                                            className="subject"
+                                            helperText="Please select Subject of Email"
+                                            onChange={handleSubjectChange}
                                         ></TextField>
-                                    
-                                    : 
-                                    <Editor
-                                    apiKey="8dxnt8hpf0pmfmjxgoaddn2ibcb7561qslxqts96khscmwq2"
-                                    label="enter the body "
-                                    init={{
-                                    height:400,
-                                    width:600,
-                                    plugins: ['advlist autolink lists link ', 
-                                    'charmap print preview anchor help',
-                                    'searchreplace visualblocks code',
-                                    'insertdatetime  table paste wordcount'],
+                                    </Grid>
 
-                                    toolbar: 'undo redo | formatselect | bold italic | \
-                                    alignleft aligncenter alignright | \
-                                    bullist numlist outdent indent | help'
-                                    }}
-                                    onChange={(e)=>{
-                                      setBody(e.target.getContent())
-                                    }}
-                                  />
-                                    }
-                                </Grid>
+                                    <Grid container lg={9} justify='center' className='body'  >
+                                        {signedInUser != null ?
 
-                                <Grid item lg={11} justify='right'>
-                                    <CourseList columns={columns} data={rows} />
+                                            <TextField
+                                                label="body"
+                                                className="body"
+                                                helperText="Please Enter Opening Remarks of Email"
+                                                multiline
+                                                style={{ width: 600 }}
+                                                value={body}
+                                                variant="outlined"
+                                                minRows={6}
+                                                onChange={handleBodyChange}
+                                            ></TextField>
+
+                                            :
+                                            <Editor
+                                            
+                                            apiKey="8dxnt8hpf0pmfmjxgoaddn2ibcb7561qslxqts96khscmwq2"
+                                            initialValue="<p>enter mail body</p>"
+                                            init={{
+                                            height: 400,
+                                            width:800,
+                                            plugins: [
+                                                'advlist autolink lists link image', 
+                                                'charmap print preview anchor help',
+                                                'searchreplace visualblocks code',
+                                                'insertdatetime media table paste wordcount'
+                                            ],
+                                            toolbar:
+                                                'undo redo | formatselect | bold italic | \
+                                                alignleft aligncenter alignright | \
+                                                bullist numlist outdent indent | help'
+                                            }}
+                                            onChange={(e)=>{setBody(e.target.getContent())}}
+      />
+                                        }
+                                    </Grid>
+
+                                    <Grid item lg={11} justify='right'>
+                                        <CourseList columns={columns} data={rows} />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Grid>:null}
-                            
+                            </Grid> : null}
+
                     </FuseAnimateGroup>
                 }
             ></FusePageCarded>
-            
+
         </>
-    );                 
+    );
 }
