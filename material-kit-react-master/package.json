@@ -20,6 +20,7 @@
         "chart.js": "2.8.0",
         "date-fns": "2.0.0-alpha.27",
         "downshift": "3.2.10",
+        "env-cmd": "^10.1.0",
         "firebase": "6.1.0",
         "formsy-react": "1.1.5",
         "gapi-script": "^1.1.0",
