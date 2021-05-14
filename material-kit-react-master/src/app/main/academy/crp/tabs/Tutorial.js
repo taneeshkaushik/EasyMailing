@@ -41,7 +41,7 @@ export default function FullScreenDialog(props) {
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h5">
+            <Typography variant="h5" className="text-center">
               Tutorial
             </Typography>
           </Toolbar>

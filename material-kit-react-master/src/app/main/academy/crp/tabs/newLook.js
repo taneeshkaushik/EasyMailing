@@ -310,7 +310,7 @@ export default function NewLook(props) {
             .then(
                 function () {
                     // Listen for sign-in state changes.
-                    console.log('init done');
+                    // console.log('init done');
                     setIsApiLoaded(true);
                     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
                     //console.log('inside');
@@ -318,20 +318,20 @@ export default function NewLook(props) {
                     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
                 }
             ).catch((error) => {
-                console.log(error);
+                // console.log(error);
             })
     };
     const updateSigninStatus = (isSignedIn) => {
         if (isSignedIn) {
             // Set the signed in user
             //console.log(gapi.auth2.getAuthInstance().currentUser)
-            console.log('signed in');
+            // console.log('signed in');
             setSignedInUser(gapi.auth2.getAuthInstance().currentUser.le.wt);
             setIsLoadingGoogleMailApi(false);
             // list files if user is authenticated
         }
         else {
-            console.log('not signed in')
+            // console.log('not signed in')
         }
     };
     /**

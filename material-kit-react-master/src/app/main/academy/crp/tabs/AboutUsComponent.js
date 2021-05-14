@@ -190,7 +190,7 @@ export default function AboutUsPage()
                             </div>
                         
                             <div className="flex flex-wrap w-full">
-                                    <Typography className="text-20 text-center mb-8">Developers: Abhishek Kumar Gupta, Divyanshu Mathpal, Taneesh Kaushik B.Tech CSE 2018-2022, IIT Ropar.</Typography>
+                                    <Typography className="text-20 text-center mb-8">Developers: Abhishek Kumar Gupta, Divyanshu Mathpal, Taneesh Kaushik , B.Tech CSE 2018-2022, IIT Ropar.</Typography>
                                     <Typography style={{paddingLeft:180}} className="text-20 text-center mb-8" variant="h6"><strong>Project Coordinator and Mentor: Dr. Puneet Goyal, IIT Ropar</strong></Typography>
                             </div>
             
