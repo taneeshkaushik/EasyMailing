@@ -292,6 +292,7 @@ export default function NewLook(props) {
     var SCOPES = 'https://mail.google.com/';
     const [user, setUser] = useState();
     const handleClientLoad = () => {
+        
         gapi.load('client:auth2', initClient);
 
         setEmailID("");
@@ -540,7 +541,7 @@ export default function NewLook(props) {
                                         <Button variant="outlined" color="primary" component="span" onClick={() => { setRun1(true) }} style={{ color: "white", justify: "center" }} >Take Tour </Button>
                                         {isAuthenticated ? <Button variant="outlined" style={{ color: "white" }} component="span"  onClick={()=>{ setEmailID("");  setAuthentication(false)}}>Logout</Button>  : <Button variant="outlined" className="auth" style={{ color: "white" }} onClick={() => { if(signedInUser != null) { logout(); setOpenLoginModal(true);} else {setOpenLoginModal(true);} }} component="span">Authenticate your Email ID</Button> }
 
-                                        {signedInUser != null ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login to use your email id</Button>}
+                                        {signedInUser != null && isApiLoaded==true ? <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={logout}>Logout</Button> : <Button variant="outlined" style={{ color: "white" }} component="span" className="login" onClick={handleClientLoad}>Login to use your email id</Button>}
 
                                     </div>
 
