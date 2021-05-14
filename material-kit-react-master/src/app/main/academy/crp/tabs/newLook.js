@@ -77,7 +77,7 @@ export default function NewLook(props) {
     const [sub, setSubject] = React.useState('');
     const [body, setBody] = React.useState('');
     const [list, setList] = React.useState([]);
-    const [content, setContent] = React.useState(null)
+    const [content, setContent] = React.useState(null);
 
     const FIRST_TOUR = [
         {
@@ -572,8 +572,7 @@ export default function NewLook(props) {
 
                                             :
                                             <Editor
-                                            
-                                            apiKey="8dxnt8hpf0pmfmjxgoaddn2ibcb7561qslxqts96khscmwq2"
+                                            apiKey='8dxnt8hpf0pmfmjxgoaddn2ibcb7561qslxqts96khscmwq2'
                                             initialValue="<p>enter mail body</p>"
                                             init={{
                                             height: 400,
