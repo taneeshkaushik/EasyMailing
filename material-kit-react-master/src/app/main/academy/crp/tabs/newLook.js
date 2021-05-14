@@ -14,9 +14,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import Tutorial from './Tutorial';
 import LoginModal from './LoginModal';
 import AboutUs from './AboutUs';
-import Quill from 'quill';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+
+
 
 import {
     Button,
@@ -457,45 +456,6 @@ export default function NewLook(props) {
         }
       }
 
-      var SizeStyle = Quill.import('attributors/style/size');
-      var FontStyle = Quill.import('attributors/style/font');
-      var DirectionStyle=Quill.import('attributors/style/direction');
-      var AlignClass = Quill.import('attributors/class/align');
-      var AlignStyle = Quill.import('attributors/style/align');
-      var DirectionAttribute = Quill.import('attributors/attribute/direction');
-      Quill.register(DirectionAttribute, true);
-      Quill.register(AlignStyle, true);
-      Quill.register(AlignClass, true);
-      Quill.register(SizeStyle,true);
-      Quill.register(FontStyle, true);
-      Quill.register(DirectionStyle, true);
-      var DirectionAttribute = Quill.import('attributors/attribute/direction');
-    Quill.register(DirectionAttribute, true);
-    var AlignClass = Quill.import('attributors/class/align');
-    Quill.register(AlignClass, true);
-    var BackgroundClass = Quill.import('attributors/class/background');
-    Quill.register(BackgroundClass, true);
-    var ColorClass = Quill.import('attributors/class/color');
-    Quill.register(ColorClass, true);
-    var DirectionClass = Quill.import('attributors/class/direction');
-    Quill.register(DirectionClass, true);
-    var FontClass = Quill.import('attributors/class/font');
-    Quill.register(FontClass, true);
-    var SizeClass = Quill.import('attributors/class/size');
-    Quill.register(SizeClass, true);
-    var AlignStyle = Quill.import('attributors/style/align');
-    Quill.register(AlignStyle, true);
-    var BackgroundStyle = Quill.import('attributors/style/background');
-    Quill.register(BackgroundStyle, true);
-    var ColorStyle = Quill.import('attributors/style/color');
-    Quill.register(ColorStyle, true);
-    var DirectionStyle = Quill.import('attributors/style/direction');
-    Quill.register(DirectionStyle, true);
-    var FontStyle = Quill.import('attributors/style/font');
-    Quill.register(FontStyle, true);
-    var SizeStyle = Quill.import('attributors/style/size');
-    Quill.register(SizeStyle, true);
-      
     return (
         <>
             <div className="demo-wrapper">
@@ -617,7 +577,7 @@ export default function NewLook(props) {
 
                                 <Grid container lg={9} justify='center' className='body'  >
                                     {signedInUser != null ?  
-
+                                    
                                         <TextField
                                         label="body"
                                         className="body"
@@ -631,7 +591,25 @@ export default function NewLook(props) {
                                         ></TextField>
                                     
                                     : 
-                                    <ReactQuill style={{width:800,  height:250, paddingBottom:75}} theme='snow' formats={formats} modules={modules} onChange={(value)=>{setBody(value);} } placeholder="enter the mail body" />
+                                    <Editor
+                                    apiKey="8dxnt8hpf0pmfmjxgoaddn2ibcb7561qslxqts96khscmwq2"
+                                    label="enter the body "
+                                    init={{
+                                    height:400,
+                                    width:600,
+                                    plugins: ['advlist autolink lists link ', 
+                                    'charmap print preview anchor help',
+                                    'searchreplace visualblocks code',
+                                    'insertdatetime  table paste wordcount'],
+
+                                    toolbar: 'undo redo | formatselect | bold italic | \
+                                    alignleft aligncenter alignright | \
+                                    bullist numlist outdent indent | help'
+                                    }}
+                                    onChange={(e)=>{
+                                      setBody(e.target.getContent())
+                                    }}
+                                  />
                                     }
                                 </Grid>
 

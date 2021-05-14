@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import MailPreview from './MailPreview'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Editor } from '@tinymce/tinymce-react';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
@@ -48,7 +49,8 @@ export default function FullScreenDialog(props) {
         {/* Put your code here */}
 
         <DialogContent>
-        <Typography variant='h5' gutterBottom style={{paddingLeft:600}}>
+        
+        <Typography variant='h5' gutterBottom style={{paddingLeft:400}}>
            <b>Follow these 4 simple steps and you are done.</b>
            <br></br> 
             1. Either

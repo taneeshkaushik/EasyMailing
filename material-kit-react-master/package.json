@@ -12,7 +12,7 @@
         "@nivo/bar": "^0.67.0",
         "@nivo/core": "^0.67.0",
         "@nivo/pie": "^0.67.0",
-        "@tinymce/tinymce-react": "^3.10.1",
+        "@tinymce/tinymce-react": "^3.12.4",
         "auth0-lock": "11.16.0",
         "autosuggest-highlight": "3.1.1",
         "axios": "^0.21.1",
