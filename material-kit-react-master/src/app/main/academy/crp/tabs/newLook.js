@@ -563,7 +563,7 @@ export default function NewLook(props) {
                                             <TextField
                                                 label="body"
                                                 className="body"
-                                                helperText="Please Enter Opening Remarks of Email"
+                                                helperText="enter the body of mail"
                                                 multiline
                                                 style={{ width: 600 }}
                                                 value={body}
@@ -575,11 +575,13 @@ export default function NewLook(props) {
                                             :
                                             <Editor
                                             apiKey='8dxnt8hpf0pmfmjxgoaddn2ibcb7561qslxqts96khscmwq2'
-                                            initialValue="<p>enter mail body</p>"
+                                            
                                             inline_styles = 'true'
+                                            
                                             init={{
                                             height: 400,
                                             width:800,
+                                            placeholder:"enter the body of mail",
                                             table_use_colgroups: true,
                                             table_class_list: [
                                                 {title: 'None', value: 'table_red_borders'},
