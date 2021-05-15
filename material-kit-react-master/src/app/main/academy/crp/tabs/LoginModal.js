@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { makeStyles  } from '@material-ui/styles';
 
@@ -118,7 +119,7 @@ export default function LoginModal(props) {
   return (
     <div>
 
-      <Dialog fullWidth fullHeight open={open} onClose={handleClose} TransitionComponent={Transition}>
+      <Dialog  open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar  className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">

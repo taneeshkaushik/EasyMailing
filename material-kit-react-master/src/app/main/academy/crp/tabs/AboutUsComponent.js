@@ -37,7 +37,7 @@ export default function AboutUsPage()
                         <FuseAnimate duration={400} delay={600}>
                             <Typography variant="h6" color="inherit" className="opacity-75 mt-16 mx-auto max-w-1000">
                             Post assessment, sending individually the marks/feedback/remarks/info to students in a time efficient manner is always a concern for the faculty members. Currently, there are not many easy-to-use supportive tools for this purpose and one has to spend quite a significant time to send marks, feedback or other info individually. Or one has to compromise privacy and share marks/feedback of all with all.
-                            <br></br>    <br></br>In order to serve and assist the academic community, here we provide a simple and sleek tool "ESMP" to quickly send individual emails with recipient-specific info/marks/feedback.  ESMP - Easy and Secure Mailing Portal not only empowers you to easily send individual emails but also  <strong>is very secure and respects your privacy, none of your activities or your data is known by us.</strong>
+                            <br></br>    <br></br>In order to serve and assist the academic community, here we provide a simple and sleek tool "ESMP" to quickly send individual emails with recipient-specific info/marks/feedback.  ESMP - Easy and Secure Mailing Portal not only empowers you to easily send individual emails but also  <strong>is very secure and respects your privacy.</strong>
                             </Typography>
                         </FuseAnimate>
                     </div>
