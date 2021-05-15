@@ -26,6 +26,7 @@ app.use(express.json())
 require('dotenv').config();
 const transporter = nodemailer.createTransport({
     service: 'gmail',
+    pool:true,
     auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD // naturally, replace both with your real credentials or an application-specific password
