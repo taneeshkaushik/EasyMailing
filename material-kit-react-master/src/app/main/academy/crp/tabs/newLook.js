@@ -574,31 +574,30 @@ export default function NewLook(props) {
 
                                             :
                                             <Editor
-                                                apiKey='8dxnt8hpf0pmfmjxgoaddn2ibcb7561qslxqts96khscmwq2'
-                                                initialValue="<p>enter mail body</p>"
-                                                inline_styles = 'true'
-                                                init={{
-                                                height: 400,
-                                                width:800,
-                                                table_use_colgroups: true,
-                                                table_class_list: [
-                                                    {title: 'None', value: 'table_red_borders'},
-                                                ],
-                                                plugins: [
-                                                    'advlist autolink lists link image', 
-                                                    'charmap print preview anchor help',
-                                                    'searchreplace visualblocks code',
-                                                    'insertdatetime media table paste wordcount'
-                                                ],
-                                                toolbar:
-                                                    'undo redo | formatselect | bold italic |forecolor backcolor|\
-                                                    alignleft aligncenter alignright |  \
-                                                    bullist numlist outdent indent | preview help'
-                                                
-                                                }}
-                                                
-                                                onChange={(e)=>{setBody(e.target.getContent())}}
-                                            />
+                                            apiKey='8dxnt8hpf0pmfmjxgoaddn2ibcb7561qslxqts96khscmwq2'
+                                            initialValue="<p>enter mail body</p>"
+                                            inline_styles = 'true'
+                                            init={{
+                                            height: 400,
+                                            width:800,
+                                            table_use_colgroups: true,
+                                            table_class_list: [
+                                                {title: 'None', value: 'table_red_borders'},
+                                              ],
+                                            plugins: [
+                                                'advlist autolink lists link image', 
+                                                'charmap print preview anchor help',
+                                                'searchreplace visualblocks code',
+                                                'insertdatetime media table paste wordcount'
+                                            ],
+                                            toolbar:
+                                                'undo redo | formatselect | bold italic |forecolor backcolor|\
+                                                alignleft aligncenter alignright |  \
+                                                bullist numlist outdent indent | preview help'
+                                            
+                                            }}
+                                            onChange={(e)=>{setBody(e.target.getContent())}}
+                                            />                                    
                                         }
                                     </Grid>
 

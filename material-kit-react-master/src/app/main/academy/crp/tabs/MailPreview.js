@@ -29,7 +29,7 @@ export default function MailPreview(props)
                     </div> */}
                     {/* <Divider className="my-16"/> */}
     
-                    <div contentEditable='true' dangerouslySetInnerHTML={{ __html: props.body }}></div>
+                    <div contentEditable='false' dangerouslySetInnerHTML={{ __html: props.body }}></div>
                     {props.columns.map((column)=>(
                         <Typography >{column}:  value in sheet</Typography>
                     ))}
