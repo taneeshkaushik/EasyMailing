@@ -142,11 +142,18 @@ export default function LoginModal(props) {
             className="email"
             style={{marginLeft:20 , marginTop:30 , marginBottom:30 }}
             onChange={handleEmailChange}
+            onKeyDownCapture={(event)=>{
+              var code=event.keyCode || event.which;
+              if(code==13)
+              {
+                document.getElementById("getSecretKey").click();
+              }
+            }}
         ></TextField>
 
             </Grid>
         <Grid item lg = {3}>
-                <Button onClick={generateOTP}  style={{ marginLeft:20 , marginTop:30 , marginBottom:30 }} variant="outlined" color="inherit">
+                <Button id='getSecretKey' variant='contained' onClick={generateOTP}  style={{ marginLeft:20 , marginTop:25 , marginBottom:30, color:'purple'}} >
                         Get Secret Key
                 </Button>
         </Grid>
@@ -169,13 +176,20 @@ export default function LoginModal(props) {
           type="password"
           style={{ marginLeft:20 , marginTop:30 , marginBottom:30}}
           onChange={handleOTPChange}
+          onKeyDownCapture={(event)=>{
+            var code=event.keyCode || event.which;
+            if(code==13)
+            {
+              document.getElementById("verify").click();
+            }
+          }}
           >
   
       </TextField>
 
       </Grid>
         <Grid item lg = {3}>
-      <Button onClick = {verifyOTP}   style={{marginLeft:20 , marginTop:30 , marginBottom:30 }}>
+      <Button id='verify' variant='contained' onClick = {verifyOTP}   style={{marginLeft:20 , marginTop:40 , marginBottom:30 }}>
           Verify
       </Button>
   
