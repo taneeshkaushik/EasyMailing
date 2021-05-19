@@ -31,7 +31,7 @@ export default function MailPreview(props)
     
                     <div contentEditable='false' dangerouslySetInnerHTML={{ __html: props.body }}></div>
                     {props.columns.map((column)=>(
-                        <Typography >{column}:  value in sheet</Typography>
+                        <Typography >{column}: value in sheet </Typography>
                     ))}
                     </div>
                 

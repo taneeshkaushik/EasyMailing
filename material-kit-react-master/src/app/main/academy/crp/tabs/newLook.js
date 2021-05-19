@@ -63,6 +63,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NewLook(props) {
+    const [ind , setInd] = useState(0);
     const [emailId, setEmailID] = useState("")
     const [isAuthenticated, setAuthentication] = useState(false);
     const classes = useStyles();
@@ -151,7 +152,6 @@ export default function NewLook(props) {
     function sendEmailUsingESMP() {
 
         setCnt(0);
-
         // var ctype="Content-type: text/html;charset=iso-8859-1\n\n"
         // //console.log(emailBody)
         ////console.log(list);
@@ -164,7 +164,12 @@ export default function NewLook(props) {
         // ////console.log(list);
         var s_list =[];
 
-        rows.map((value, index) => {
+        // rows.map((value, index) => {
+            console.log("hkhdak");
+            const  handle=setInterval(()=>{
+                console.log("Reached")
+                if(ind<rows.length){
+                const value=rows[ind];
             var rowlist = [];
             for (var i in value) {
                 var msg = ' ';
@@ -201,15 +206,24 @@ export default function NewLook(props) {
                 }).
                 catch(function (error) {
                     //console.log(error)
-                    alert(`Emails stopped at ${index}th mail`);
+                    // alert(`Emails stopped at ${index}th mail`);
                 })
+                // ind++;
+            }
+            else{
+                clearInterval(handle);
+                
+            }
+        },100);
+    
 
-
-        });
+        // });
 
         setSentList(s_list);
 
     }
+
+
 
     const [run1, setRun1] = React.useState(false);
     const handleSubjectChange = (event) => {
