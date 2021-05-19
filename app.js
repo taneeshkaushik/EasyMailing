@@ -14,8 +14,8 @@ const AWS = require('aws-sdk');
 const app = express();
 
 var corsOptions = {
-    // origin: 'https://esmp-2021.el.r.appspot.com',
-    origin: 'http://localhost:3000',
+    origin: 'https://esmp-2021.el.r.appspot.com',
+    // origin: 'http://localhost:3000',
     optionsSuccessStatus: 200, // For legacy browser support
     methods: "GET, POST"
 }
