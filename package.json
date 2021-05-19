@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.16.0",
+    "aws-sdk": "^2.909.0",
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
     "crypto-random-string": "^4.0.0",
@@ -20,7 +22,8 @@
     "nodemailer": "^6.6.0",
     "nodemon": "^2.0.7",
     "object-hash": "^2.1.1",
+    "randomstring": "^1.2.1",
     "react-quilljs": "^1.2.14",
-    "randomstring": "^1.2.1"
+    "save": "^2.4.0"
   }
 }
