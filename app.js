@@ -13,9 +13,17 @@ const AWS = require('aws-sdk');
 
 const app = express();
 
+var corsOptions = {
+    // origin: 'https://esmp-2021.el.r.appspot.com',
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200, // For legacy browser support
+    methods: "GET, POST"
+}
+
+app.use(cors(corsOptions));
 
 
-app.use(cors())
+// app.use(cors())
 app.use(express.static(path.join(__dirname , 'material-kit-react-master/build')))
 app.use(
     express.urlencoded({
@@ -87,7 +95,9 @@ app.post("/api/get-otp", (req, res) => {
 
     new AWS.SES(SESConfig).sendEmail(params , function(error , info){
         if (error)
-            res.status(500).send({ 'error': 'Unable to send email' });
+        {  console.log(error) 
+           res.status(500).send({ 'error': 'Unable to send email' });
+        }
         else
             res.status(200).send({ 'otp': enc_otp });
 

@@ -15,6 +15,7 @@ import Tutorial from './Tutorial';
 import LoginModal from './LoginModal';
 import AboutUs from './AboutUs';
 
+import EmailListComponent from './SentList';
 
 
 import {
@@ -78,7 +79,7 @@ export default function NewLook(props) {
     const [body, setBody] = React.useState('');
     const [list, setList] = React.useState([]);
     const [content, setContent] = React.useState(null);
-
+    const [sentList , setSentList] = React.useState([]);
     const FIRST_TOUR = [
         {
             target: ".aboutus",
@@ -131,6 +132,11 @@ export default function NewLook(props) {
             disableBeacon: true,
         },
         {
+            target: ".sentlist",
+            content: "Here you can have the view the status of the email whether sent/unsent",
+            disableBeacon: true,
+        },
+        {
             target: ".send",
             content: "Send Email from here",
             disableBeacon: true,
@@ -145,6 +151,7 @@ export default function NewLook(props) {
     function sendEmailUsingESMP() {
 
         setCnt(0);
+
         // var ctype="Content-type: text/html;charset=iso-8859-1\n\n"
         // //console.log(emailBody)
         ////console.log(list);
@@ -155,6 +162,8 @@ export default function NewLook(props) {
         }
         ////console.log(new_list);
         // ////console.log(list);
+        var s_list =[];
+
         rows.map((value, index) => {
             var rowlist = [];
             for (var i in value) {
@@ -173,8 +182,7 @@ export default function NewLook(props) {
                 rowlist.push(msg);
 
             }
-
-
+           
             // api call here 
             axiosInstance.post('/api/sendMail',
                 {
@@ -185,17 +193,21 @@ export default function NewLook(props) {
                     'table': rowlist,
 
                 }).then(function (response) {
-
+                    s_list.push(value.email);
                     // //console.log(response);
+                    
                     setCnt((prevProgress) => (prevProgress + (100 / rows.length)) > 100 ? 100 : prevProgress + (100 / rows.length));
 
                 }).
                 catch(function (error) {
                     //console.log(error)
+                    alert(`Emails stopped at ${index}th mail`);
                 })
 
 
         });
+
+        setSentList(s_list);
 
     }
 
@@ -228,6 +240,8 @@ export default function NewLook(props) {
         }
     }
     const [previewOpen, setPreviewOpen] = React.useState(false);
+    const [emailListOpen, setEmailListOpen] = React.useState(false);
+
     const [openTutorial, setOpenTutorial] = React.useState(false);
     const [openLogin, setOpenLoginModal] = React.useState(false);
     const [loggedOut, setLoggedOut] = React.useState(false);
@@ -349,6 +363,7 @@ export default function NewLook(props) {
         }
         //console.log(new_list);
         // //console.log(list);
+        var s_list = [];
         rows.map((value, index) => {
             var to = 'To: ' + '<' + value.email + '>' + '\r\n';
             var msg = to + subject + body + '\n';
@@ -375,6 +390,7 @@ export default function NewLook(props) {
                 "raw": temp
             }).then(function (response) {
                 // alert("Email sent successfully");
+                s_list.push(value.email);
                 setCnt((prevProgress) => (prevProgress + (100 / rows.length)) > 100 ? 100 : prevProgress + (100 / rows.length));
             })
                 .catch((err) => {
@@ -382,6 +398,7 @@ export default function NewLook(props) {
                 });
 
         });
+        setSentList(s_list);
         // const tempcnt=cnt;
         // setCnt(tempcnt+(100/rows.length))
     }
@@ -415,6 +432,7 @@ export default function NewLook(props) {
         setBody("");
         setColumns(null);
         setList([]);
+        setSentList([]);
         setCnt(0);
 
         // window.location.reload()
@@ -532,12 +550,13 @@ export default function NewLook(props) {
                                 </div>
                             </ListItem>
                             {rows != null && columns != null ? <Button className={"preview"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setPreviewOpen(true) }}>Preview</Button> : null}
+                            {rows != null && columns != null ? <Button className={"sentlist"} variant="outlined" color="primary" component="span" style={{ color: "Purple", justify: "center" }} onClick={() => { setEmailListOpen(true) }}>View Sent List</Button> : null}
                             {rows != null && columns != null ? <Button className={"reset"} color="primary" variant="outlined" style={{ color: "Purple", justify: "center" }} onClick={resetHandle}>Reset</Button> : null}
                             {previewOpen == true ? <Preview columns={list} body={body} subject={sub} setPreviewOpen={setPreviewOpen} email={emailId} ></Preview> : null}
                             {openAbout == true ? <AboutUs setOpenAbout={setOpenAbout} ></AboutUs> : null}
                             {openTutorial == true ? <Tutorial setOpenTutorial={setOpenTutorial}></Tutorial> : null}
                             {openLogin == true ? <LoginModal setEmailID={setEmailID} setAuthentication={setAuthentication} setOpenLoginModal={setOpenLoginModal}></LoginModal> : null}
-
+                            {emailListOpen == true ?  <EmailListComponent rows = {rows} sentList = {sentList} setEmailListOpen={setEmailListOpen} /> :null}
                         </div>
                         {rows != null && columns != null ?
                             <Grid container lg={12} paddingTop="100" >

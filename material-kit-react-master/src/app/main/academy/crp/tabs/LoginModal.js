@@ -73,6 +73,8 @@ export default function LoginModal(props) {
     }).
     catch(function(error){
       console.log(error)
+      alert("Error !!! Please try again");
+      handleClose();
     })
       
   }
